@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : 'ExecutableRequirements-Tests',
-	#package : 'ExecutableRequirements-Tests'
+	#category : 'ExecutableRequirements-Tests-Meta-Requirements-Tests',
+	#package : 'ExecutableRequirements-Tests',
+	#tag : 'Meta-Requirements-Tests'
 }
 
 { #category : 'running' }
@@ -21,7 +22,7 @@ ExReqRepositoryTest >> setUp [
 	repository := ExReqRepository new pragmaSelector: #ExReqTest; yourself
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 ExReqRepositoryTest >> testRequirementsAreTraceable [
 
 	| documents mockDocuments pharoImageDocument |
@@ -40,7 +41,7 @@ ExReqRepositoryTest >> testRequirementsAreTraceable [
 	self assert: mockDocuments first requirementId equals: #testReq3
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 ExReqRepositoryTest >> testRequirementsAreUnique [
 
 	|expectedRequirementsNumber |
@@ -50,7 +51,7 @@ ExReqRepositoryTest >> testRequirementsAreUnique [
 	self assert: self repository requirements asSet size equals: expectedRequirementsNumber
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 ExReqRepositoryTest >> testRequirementsRepository [
 
 	self assert: (self repository requirements allSatisfy: [ :each | each repository = self repository ])

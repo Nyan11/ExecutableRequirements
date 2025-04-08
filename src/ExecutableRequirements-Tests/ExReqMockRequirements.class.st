@@ -1,8 +1,9 @@
 Class {
 	#name : 'ExReqMockRequirements',
 	#superclass : 'Object',
-	#category : 'ExecutableRequirements-Tests',
-	#package : 'ExecutableRequirements-Tests'
+	#category : 'ExecutableRequirements-Tests-Meta-Requirements-Tests',
+	#package : 'ExecutableRequirements-Tests',
+	#tag : 'Meta-Requirements-Tests'
 }
 
 { #category : 'tests' }
@@ -29,7 +30,7 @@ ExReqMockRequirements >> testReq3 [
 	<ExReqTest>
 	^ ExReqRequirement new
 		  title:
-			  'A requirement can be traced to a document that contain the specification, by default this Pharo image';
+			  'A requirement can be traced to a document that contain the specification';
 		  sourceDocument: (ExReqMockDocument new requirementId: #testReq3);
 		  yourself
 ]
@@ -42,30 +43,97 @@ ExReqMockRequirements >> testReq4 [
 		  title: 'A requirement can be verified';
 		  addVerification: [ :verify |
 			  verify addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq4) ast allChildren
-						   select: [ :each | each isBlock ]) first ];
+					  (((ExReqMockRequirements methodNamed: #testReq4) ast
+						    allChildren select: [ :each | each isSequence ]) at: 2) ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq4) ast allChildren
-						   select: [ :each | each isBlock ]) second
+					  (((ExReqMockRequirements methodNamed: #testReq4) ast
+						    allChildren select: [ :each | each isSequence ]) at: 4)
 				  withPrecondition: [ :obj :arguments :requirement |
 					  obj = requirement ] ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq4) ast allChildren
-						   select: [ :each | each isBlock ]) third
+					  (((ExReqMockRequirements methodNamed: #testReq4) ast
+						    allChildren select: [ :each | each isSequence ]) at: 7)
 				  withPostcondition: [ :obj :arguments :requirement |
 					  obj = requirement ] ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq4) ast allChildren
-						   select: [ :each | each isBlock ]) last
+					  (((ExReqMockRequirements methodNamed: #testReq4) ast
+						    allChildren select: [ :each | each isSequence ]) at: 10)
 				  withPrecondition: [ :obj :arguments :requirement |
 					  obj = requirement ]
 				  withPostcondition: [ :obj :arguments :requirement |
 					  obj = requirement ] ];
+		  yourself
+]
+
+{ #category : 'tests' }
+ExReqMockRequirements >> testReq5 [
+
+	<ExReqTest>
+	^ ExReqRequirement new
+		  title: 'A requirement can have a title';
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq5) ast)
+				  withPostcondition: [ :obj :arguments :requirement |
+					  requirement title = 'A requirement can have a title' and: [
+							  obj title = 'A requirement can have a title' ] ] ];
+		  yourself
+]
+
+{ #category : 'tests' }
+ExReqMockRequirements >> testReq6 [
+
+	<ExReqTest>
+	^ ExReqRequirement new
+		  title: 'A requirement can have a description';
+		  description: 'The description';
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq6) ast allChildren
+						   select: [ :each | each isLiteralNode ]) second parent
+				  withPostcondition: [ :obj :arguments :requirement |
+					  requirement description = 'The description' and: [
+							  obj description = 'The description' ] ] ];
+		  yourself
+]
+
+{ #category : 'tests' }
+ExReqMockRequirements >> testReq7 [
+
+	<ExReqTest>
+	^ ExReqRequirement new
+		  title: 'A requirement verifications can target the same AST node';
+		  description: 'The description';
+		  addVerification: [ :verify |
+			  verify addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
+						   select: [ :each | each isSequence ]) second ];
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
+						   select: [ :each | each isSequence ]) second
+				  withPrecondition: [ :obj :arguments :requirement | true ] ];
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
+						   select: [ :each | each isSequence ]) second
+				  withPrecondition: [ :obj :arguments :requirement | true ]
+				  withPostcondition: [ :obj :arguments :requirement | true ] ];
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
+						   select: [ :each | each isSequence ]) second
+				  withPostcondition: [ :obj :arguments :requirement | true ] ];
 		  yourself
 ]

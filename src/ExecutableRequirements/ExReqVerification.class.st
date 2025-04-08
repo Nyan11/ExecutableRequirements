@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'steps'
 	],
-	#category : 'ExecutableRequirements-Model',
+	#category : 'ExecutableRequirements-Model-Static',
 	#package : 'ExecutableRequirements',
-	#tag : 'Model'
+	#tag : 'Model-Static'
 }
 
 { #category : 'adding' }
@@ -37,6 +37,14 @@ ExReqVerification >> addStepOnAST: aRBNode withPrecondition: aPreconditionBlock 
 		        postcondition: aPostconditionBlock;
 		        yourself.
 	self steps add: step
+]
+
+{ #category : 'converting' }
+ExReqVerification >> asReport [
+
+	^ ExReqVerificationReport new
+		  verification: self;
+		  yourself
 ]
 
 { #category : 'initialization' }

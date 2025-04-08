@@ -5,10 +5,16 @@ Class {
 		'requirements',
 		'pragmaSelector'
 	],
-	#category : 'ExecutableRequirements-Model',
+	#category : 'ExecutableRequirements-Model-Static',
 	#package : 'ExecutableRequirements',
-	#tag : 'Model'
+	#tag : 'Model-Static'
 }
+
+{ #category : 'converting' }
+ExReqRepository >> asReport [
+
+	^ ExReqRepositoryReport new repository: self; yourself
+]
 
 { #category : 'accessing' }
 ExReqRepository >> pragmaSelector [
@@ -37,12 +43,7 @@ ExReqRepository >> updateRequirements [
 	requirements := pragmas collect: [ :p |
 		                | requirement |
 		                requirement := p method valueWithReceiver:
-			                               p methodClass instanceSide basicNew.
+			                               p methodClass instanceSide new.
 		                requirement repository: self.
-		                requirement sourceDocument ifNil: [
-			                requirement sourceDocument:
-				                (ExReqPharoImageSourceDocument new
-					                 method: p method;
-					                 yourself) ].
 		                requirement ]
 ]

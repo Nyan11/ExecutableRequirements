@@ -6,10 +6,18 @@ Class {
 		'precondition',
 		'postcondition'
 	],
-	#category : 'ExecutableRequirements-Model',
+	#category : 'ExecutableRequirements-Model-Static',
 	#package : 'ExecutableRequirements',
-	#tag : 'Model'
+	#tag : 'Model-Static'
 }
+
+{ #category : 'converting' }
+ExReqStep >> asReport [
+
+	^ ExReqStepReport new
+		  step: self;
+		  yourself
+]
 
 { #category : 'testing' }
 ExReqStep >> hasPostcondition [
