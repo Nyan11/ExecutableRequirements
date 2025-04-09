@@ -90,3 +90,8 @@ ExReqExampleTODOApplication >> selectedTask [
 
 	^ listPresenter selectedItem
 ]
+
+{ #category : 'as yet unclassified' }
+ExReqExampleTODOApplication >> tasks [
+	^ tasks
+]

@@ -4,14 +4,23 @@ Class {
 	#instVars : [
 		'step',
 		'previousStepReport',
+		'nextStepReport',
 		'requirement',
 		'preconditionValidity',
-		'postconditionValidity'
+		'postconditionValidity',
+		'stepNumber',
+		'numberOfSteps'
 	],
 	#category : 'ExecutableRequirements-Model-Report',
 	#package : 'ExecutableRequirements',
 	#tag : 'Model-Report'
 }
+
+{ #category : 'accessing' }
+ExReqStepReport >> hasNextStepReport [
+
+	^ nextStepReport isNotNil
+]
 
 { #category : 'testing' }
 ExReqStepReport >> hasPostcondition [
@@ -23,6 +32,12 @@ ExReqStepReport >> hasPostcondition [
 ExReqStepReport >> hasPrecondition [
 
 	^ self step precondition isNotNil
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> hasPreviousStepReport [
+
+	^ previousStepReport isNotNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -42,8 +57,38 @@ ExReqStepReport >> isPreviousStepValid [
 ]
 
 { #category : 'testing' }
+ExReqStepReport >> isStepReport [
+
+	^ true
+]
+
+{ #category : 'testing' }
 ExReqStepReport >> isValid [
 	^ self preconditionIsValid and: [self postconditionIsValid].
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> nextStepReport [
+
+	^ nextStepReport
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> nextStepReport: anObject [
+
+	nextStepReport := anObject
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> numberOfSteps [
+
+	^ numberOfSteps
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> numberOfSteps: anObject [
+
+	numberOfSteps := anObject
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,41 +139,70 @@ ExReqStepReport >> step: anObject [
 	step := anObject
 ]
 
+{ #category : 'accessing' }
+ExReqStepReport >> stepNumber [
+
+	^ stepNumber
+]
+
+{ #category : 'accessing' }
+ExReqStepReport >> stepNumber: anObject [
+
+	stepNumber := anObject
+]
+
+{ #category : 'as yet unclassified' }
+ExReqStepReport >> subReports [
+
+	^ {  }
+]
+
 { #category : 'as yet unclassified' }
 ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
+	"
+	0 - Precondition ok -> ok
+	1 - precondition valid
+	2 - Postcondition =  nil -> true
+	3 - Postcondition not nil -> evaluation
+	"
 
-	self isValid ifTrue: [ ^ self ].
-	self isPreviousStepValid ifFalse: [
-		preconditionValidity := false.
-		postconditionValidity := false.
-		^ self ].
-
+	self postconditionIsValid ifTrue: [ ^ self ].
+	self preconditionIsValid ifFalse: [ ^ self ].
 	self step postcondition ifNil: [
 		postconditionValidity := true.
 		^ self ].
-	self preconditionIsValid ifFalse: [ ^ self ].
-
-	(self step postcondition valueWithEnoughArguments: {
-			 aContext receiver.
-			 aContext arguments.
-			 self requirement })
-		ifTrue: [ postconditionValidity := true ]
-		ifFalse: [ preconditionValidity := false ]
+	preconditionValidity := postconditionValidity := self step
+		                                                 postcondition
+		                                                 valueWithEnoughArguments:
+			                                                 {
+				                                                 aContext receiver.
+				                                                 aContext
+					                                                 arguments.
+				                                                 self requirement }.
+	self isValid ifTrue: [ self repositoryReport emitStepIsValid: self. ]
 ]
 
 { #category : 'as yet unclassified' }
 ExReqStepReport >> verifyStepPreconditionWithContext: aContext [
-
-	self isValid ifTrue: [ ^ self ].
+	"
+	0 - Precondition ok -> ok
+	1 - Previous step valid
+	2 - Precondition =  nil -> true
+	3 - Precondition not nil -> evaluation
+	"
+	self preconditionIsValid ifTrue: [ ^ self ].
 	self isPreviousStepValid ifFalse: [
 		preconditionValidity := false.
 		postconditionValidity := false.
 		^ self ].
+
 	self step precondition ifNil: [
 		preconditionValidity := true.
 		^ self ].
-	(self step precondition valueWithEnoughArguments: {
-			 aContext receiver.
-			 aContext arguments.
-			 self requirement }) ifTrue: [ preconditionValidity := true ]
+
+	preconditionValidity := self step precondition
+		                        valueWithEnoughArguments: {
+				                        aContext receiver.
+				                        aContext arguments.
+				                        self requirement }
 ]

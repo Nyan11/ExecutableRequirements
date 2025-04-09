@@ -7,10 +7,8 @@ Class {
 }
 
 { #category : 'api' }
-ExReqPreconditionTracingPoint >> breakInContext: aContext node: aNode [
+ExReqPreconditionTracingPoint >> verifyStepsConditionWithContext: aContext [
 
-	self stepReports
-		reject: [ :each | each preconditionIsValid ]
-		thenDo: [ :stepReport |
-			stepReport verifyStepPreconditionWithContext: aContext ]
+	self stepReports do: [ :stepReport |
+		stepReport verifyStepPreconditionWithContext: aContext ]
 ]

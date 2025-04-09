@@ -37,6 +37,22 @@ ExReqTracingPoint class >> removeBreakpoint: aBreakpoint [
 	self all remove: aBreakpoint ifAbsent: [ ].
 ]
 
+{ #category : 'api' }
+ExReqTracingPoint >> breakInContext: aContext node: aNode [
+
+	self isEnabled ifFalse: [ ^ self ].
+	self enabled: false.
+	self verifyStepsConditionWithContext: aContext.
+	self enabled: true
+]
+
+{ #category : 'initialization' }
+ExReqTracingPoint >> initialize [
+
+	super initialize.
+	enabled := true
+]
+
 { #category : 'accessing' }
 ExReqTracingPoint >> stepReports [
 
@@ -47,4 +63,10 @@ ExReqTracingPoint >> stepReports [
 ExReqTracingPoint >> stepReports: aCollection [
 
 	stepReports := aCollection
+]
+
+{ #category : 'api' }
+ExReqTracingPoint >> verifyStepsConditionWithContext: aContext [
+
+	self shouldBeImplemented
 ]

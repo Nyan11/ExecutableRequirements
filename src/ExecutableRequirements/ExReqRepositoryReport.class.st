@@ -60,7 +60,7 @@ ExReqRepositoryReport >> findRequirementReport: anExReqRequirement [
 ExReqRepositoryReport >> initialize [
 
 	super initialize.
-	tracingPoints := OrderedCollection new
+	tracingPoints := OrderedCollection new.
 ]
 
 { #category : 'as yet unclassified' }
@@ -69,7 +69,15 @@ ExReqRepositoryReport >> installTracingPoints [
 	self createTracingPoints.
 	self tracingPoints do: [ :each |
 		each preconditionTracingPoint install.
-		each postconditionTracingPoint install ]
+		each postconditionTracingPoint install ].
+	self isInstalled: true.
+	self isRunning: true.
+]
+
+{ #category : 'testing' }
+ExReqRepositoryReport >> isRepositoryReport [
+
+	^ true
 ]
 
 { #category : 'testing' }
@@ -81,9 +89,11 @@ ExReqRepositoryReport >> isValid [
 { #category : 'as yet unclassified' }
 ExReqRepositoryReport >> removeTracingPoints [
 
-	self tracingPoints do: [ :each | 
+	self tracingPoints do: [ :each |
 		each preconditionTracingPoint remove.
-		each postconditionTracingPoint remove ]
+		each postconditionTracingPoint remove ].
+	self isRunning: false.
+	
 ]
 
 { #category : 'accessing' }
@@ -97,13 +107,20 @@ ExReqRepositoryReport >> repository: anObject [
 
 	repository := anObject.
 	requirementReports := repository requirements collect: [ :each |
-		                      each asReport ]
+		                      each asReport ].
+	self repositoryReport: self.
 ]
 
 { #category : 'accessing' }
 ExReqRepositoryReport >> requirementReports [
 
 	^ requirementReports
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> subReports [
+
+	^ self requirementReports
 ]
 
 { #category : 'accessing' }

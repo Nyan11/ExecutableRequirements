@@ -6,19 +6,17 @@ Class {
 	#tag : 'Technical'
 }
 
-{ #category : 'api' }
-ExReqPostconditionTracingPoint >> breakInContext: aContext node: aNode [
-
-	self stepReports
-		reject: [ :each | each postconditionIsValid ]
-		thenDo: [ :stepReport |
-			stepReport verifyStepPostconditionWithContext: aContext ]
-]
-
 { #category : 'links' }
 ExReqPostconditionTracingPoint >> breakLink [
 
 	^ super breakLink
 		  control: #after;
 		  yourself
+]
+
+{ #category : 'api' }
+ExReqPostconditionTracingPoint >> verifyStepsConditionWithContext: aContext [
+
+	self stepReports do: [ :stepReport | stepReport verifyStepPostconditionWithContext: aContext ].
+
 ]

@@ -6,6 +6,17 @@ Class {
 	#tag : 'Example-TODO'
 }
 
+{ #category : 'as yet unclassified' }
+ExReqExampleTODORequirements >> inspectRepositoryReport [
+
+	<script: 'ExReqExampleTODORequirements new inspectRepositoryReport'>
+	| repository |
+	repository := ExReqRepository new
+		              pragmaSelector: #ExReqTODO;
+		              yourself.
+	repository asReport inspect
+]
+
 { #category : 'tests' }
 ExReqExampleTODORequirements >> todoReq1 [
 
@@ -15,20 +26,17 @@ ExReqExampleTODORequirements >> todoReq1 [
 		  description: 'A task is composed of:
 - a text (String)
 - a state (Enum: TODO, DONE)';
-addVerification: [ :verify |
+		  addVerification: [ :verify |
 			  verify
-				  addStepOnAST:
-					  (ExReqExampleTODOTask >> #title:) ast
+				  addStepOnAST: (ExReqExampleTODOTask >> #text:) ast
 				  withPrecondition: [ :obj :arguments | arguments first isString ] ];
-			addVerification: [ :verify |
+		  addVerification: [ :verify |
 			  verify
-				  addStepOnAST:
-					  (ExReqExampleTODOTask >> #state) ast
+				  addStepOnAST: (ExReqExampleTODOTask >> #state) ast
 				  withPrecondition: [ :obj | obj state = #DONE ] ];
-			addVerification: [ :verify |
+		  addVerification: [ :verify |
 			  verify
-				  addStepOnAST:
-					  (ExReqExampleTODOTask >> #state) ast
+				  addStepOnAST: (ExReqExampleTODOTask >> #state) ast
 				  withPrecondition: [ :obj | obj state = #TODO ] ];
 		  yourself
 ]

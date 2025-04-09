@@ -11,6 +11,12 @@ Class {
 }
 
 { #category : 'testing' }
+ExReqRequirementReport >> isRequirementReport [
+
+	^ true
+]
+
+{ #category : 'testing' }
 ExReqRequirementReport >> isValid [
 
 	^ self verificationReports allSatisfy: #isValid.
@@ -27,7 +33,14 @@ ExReqRequirementReport >> requirement: anObject [
 
 	requirement := anObject.
 	verificationReports := requirement verifications collect: [ :each |
-		                       each asReport requirement: anObject; yourself ]
+		                       each asReport ].
+	self subReports do: [ :each | each requirement: anObject ]
+]
+
+{ #category : 'accessing' }
+ExReqRequirementReport >> subReports [
+
+	^ self verificationReports
 ]
 
 { #category : 'accessing' }
