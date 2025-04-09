@@ -179,7 +179,8 @@ ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
 				                                                 aContext
 					                                                 arguments.
 				                                                 self requirement }.
-	self isValid ifTrue: [ self repositoryReport emitStepIsValid: self. ]
+	self isValid ifTrue: [
+		self repositoryReport annouceStepReportIsValid: self ]
 ]
 
 { #category : 'as yet unclassified' }

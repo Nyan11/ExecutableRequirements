@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'requirementReports',
 		'repository',
-		'tracingPoints'
+		'tracingPoints',
+		'announcer'
 	],
 	#category : 'ExecutableRequirements-Model-Report',
 	#package : 'ExecutableRequirements',
@@ -21,6 +22,34 @@ ExReqRepositoryReport >> allNotValidRequirementReports [
 ExReqRepositoryReport >> allValidRequirementReports [
 
 	^ self requirementReports select: [ :each | each isValid ]
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> annouceStepReportIsValid: aStepReport [
+
+	self announcer announce:
+			(ExReqStepReportIsValidEvent new
+				 stepReport: aStepReport;
+				 yourself)
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> annouceTracingPointInstalled [
+
+	self announcer announce: (ExReqTracingPointInstalledEvent new)
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> annouceTracingPointRemoved [
+
+	self announcer ifNil: [ ^ self ].
+	self announcer announce: ExReqTracingPointRemovedEvent new
+]
+
+{ #category : 'initialization' }
+ExReqRepositoryReport >> announcer [
+
+	^ announcer
 ]
 
 { #category : 'as yet unclassified' }
@@ -61,6 +90,7 @@ ExReqRepositoryReport >> initialize [
 
 	super initialize.
 	tracingPoints := OrderedCollection new.
+	announcer := Announcer new
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,6 +102,7 @@ ExReqRepositoryReport >> installTracingPoints [
 		each postconditionTracingPoint install ].
 	self isInstalled: true.
 	self isRunning: true.
+	self annouceTracingPointInstalled
 ]
 
 { #category : 'testing' }
@@ -93,7 +124,7 @@ ExReqRepositoryReport >> removeTracingPoints [
 		each preconditionTracingPoint remove.
 		each postconditionTracingPoint remove ].
 	self isRunning: false.
-	
+	self annouceTracingPointRemoved
 ]
 
 { #category : 'accessing' }

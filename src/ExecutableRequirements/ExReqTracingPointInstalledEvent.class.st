@@ -1,0 +1,10 @@
+Class {
+	#name : 'ExReqTracingPointInstalledEvent',
+	#superclass : 'Announcement',
+	#instVars : [
+		'stepReport'
+	],
+	#category : 'ExecutableRequirements-Events',
+	#package : 'ExecutableRequirements',
+	#tag : 'Events'
+}

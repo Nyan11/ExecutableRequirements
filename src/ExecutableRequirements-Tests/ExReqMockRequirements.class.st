@@ -137,3 +137,25 @@ ExReqMockRequirements >> testReq7 [
 				  withPostcondition: [ :obj :arguments :requirement | true ] ];
 		  yourself
 ]
+
+{ #category : 'tests' }
+ExReqMockRequirements >> testReq8 [
+
+	<ExReqTest>
+	^ ExReqRequirement new
+		  title: 'A requirement verifications can have multiple steps';
+		  addVerification: [ :verify |
+			  verify addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq8) ast allChildren
+						   select: [ :each | each isSequence ]) second.
+			  verify addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq8) ast allChildren
+						   select: [ :each | each isSequence ]) second.
+			  verify addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq8) ast allChildren
+						   select: [ :each | each isSequence ]) second.
+			  verify addStepOnAST:
+					  ((ExReqMockRequirements methodNamed: #testReq8) ast allChildren
+						   select: [ :each | each isSequence ]) second ];
+		  yourself
+]

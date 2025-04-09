@@ -23,9 +23,14 @@ ExReqTracingPoint class >> all [
 ExReqTracingPoint class >> cleanUp [
 
 	<script>
-	ExReqPreconditionTracingPoint allInstances do: [ :each | each remove ].
-	ExReqPostconditionTracingPoint allInstances do: [ :each | each remove ].
-	self all removeAll
+	ExReqPreconditionTracingPoint allInstances do: [ :each | 
+		each link uninstall.
+		each remove ].
+	ExReqPostconditionTracingPoint allInstances do: [ :each |
+		each link uninstall.
+		each remove ].
+	self all removeAll.
+	Smalltalk image garbageCollect
 ]
 
 { #category : 'accessing' }
