@@ -68,9 +68,9 @@ ExReqUIStepReportPresenter >> initializePresenter [
 	previousStepStatus := SpImagePresenter new image: (Smalltalk ui icons iconNamed: #testNotRun); yourself.
 	nextStepButton := SpButtonPresenter new icon: (Smalltalk ui icons iconNamed: #right); yourself.
 	nextStepStatus := SpImagePresenter new image: (Smalltalk ui icons iconNamed: #testNotRun); yourself.
-	astNodeWidget := ExReqConditionWidget new changeLabel: 'class >> method'; yourself.
-	preconditionWidget := ExReqConditionWidget new changeLabel: 'Precondition'; yourself.
-	postconditionWidget := ExReqConditionWidget new changeLabel: 'Postcondition'; yourself.
+	astNodeWidget := ExReqBrowseAndCodeWidget new changeLabel: 'class >> method'; yourself.
+	preconditionWidget := ExReqBrowseAndCodeWidget new changeLabel: 'Precondition'; yourself.
+	postconditionWidget := ExReqBrowseAndCodeWidget new changeLabel: 'Postcondition'; yourself.
 ]
 
 { #category : 'accessing' }

@@ -1,5 +1,5 @@
 Class {
-	#name : 'ExReqConditionWidget',
+	#name : 'ExReqBrowseAndCodeWidget',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'code',
@@ -14,43 +14,43 @@ Class {
 }
 
 { #category : 'accessing' }
-ExReqConditionWidget >> action [
+ExReqBrowseAndCodeWidget >> action [
 
 	^ action
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> action: aBlock [
+ExReqBrowseAndCodeWidget >> action: aBlock [
 
 	action := aBlock
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> button [
+ExReqBrowseAndCodeWidget >> button [
 
 	^ button
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> changeIcon: anIcon [
+ExReqBrowseAndCodeWidget >> changeIcon: anIcon [
 
 	self button icon: anIcon
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> changeLabel: aString [
+ExReqBrowseAndCodeWidget >> changeLabel: aString [
 
 	self label label: aString.
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> code [
+ExReqBrowseAndCodeWidget >> code [
 
 	^ code
 ]
 
 { #category : 'layout' }
-ExReqConditionWidget >> defaultLayout [
+ExReqBrowseAndCodeWidget >> defaultLayout [
 
 	^ SpBoxLayout newVertical
 		  spacing: 4;
@@ -67,7 +67,7 @@ ExReqConditionWidget >> defaultLayout [
 ]
 
 { #category : 'initialization - deprecated' }
-ExReqConditionWidget >> initializePresenter [
+ExReqBrowseAndCodeWidget >> initializePresenter [
 
 	action := [  ].
 	code := SpCodePresenter new editable: false; yourself.
@@ -76,19 +76,19 @@ ExReqConditionWidget >> initializePresenter [
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> label [
+ExReqBrowseAndCodeWidget >> label [
 
 	^ label
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> model [
+ExReqBrowseAndCodeWidget >> model [
 
 	^ model
 ]
 
 { #category : 'accessing' }
-ExReqConditionWidget >> model: anObject [
+ExReqBrowseAndCodeWidget >> model: anObject [
 
 	model := anObject
 ]
