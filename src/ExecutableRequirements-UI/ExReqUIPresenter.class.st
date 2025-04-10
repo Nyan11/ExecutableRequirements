@@ -36,6 +36,13 @@ ExReqUIPresenter >> defaultLayout [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqUIPresenter >> ensureAllTracingPointsAreRemoved [
+
+	self repositoryReport ifNil: [ ^ self ].
+	self repositoryReport removeTracingPoints
+]
+
 { #category : 'initialization - deprecated' }
 ExReqUIPresenter >> initializePresenter [
 
@@ -56,6 +63,15 @@ ExReqUIPresenter >> isRefreshOnGoing [
 ExReqUIPresenter >> isRefreshOnGoing: anObject [
 
 	isRefreshOnGoing := anObject
+]
+
+{ #category : 'showing' }
+ExReqUIPresenter >> open [
+
+	| window |
+	window := super open.
+	window whenWillCloseDo: [ self ensureAllTracingPointsAreRemoved ].
+	^ window
 ]
 
 { #category : 'accessing' }

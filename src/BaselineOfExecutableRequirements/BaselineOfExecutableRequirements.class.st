@@ -37,9 +37,16 @@ BaselineOfExecutableRequirements >> coreDependencies: spec [
 BaselineOfExecutableRequirements >> corePackages: spec [
 
 	spec package: 'ExecutableRequirements'.
-
-	"tests packages"
-	spec package: 'ExecutableRequirements-Tests' with: [ spec requires: #( 'ExecutableRequirements' ) ]
+	
+	spec
+		package: 'ExecutableRequirements-Examples'
+		with: [ spec requires: #( 'ExecutableRequirements' ) ].
+	spec
+		package: 'ExecutableRequirements-Tests'
+		with: [ spec requires: #( 'ExecutableRequirements' ) ].
+	spec
+		package: 'ExecutableRequirements-UI'
+		with: [ spec requires: #( 'ExecutableRequirements' ) ]
 ]
 
 { #category : 'baselines' }
