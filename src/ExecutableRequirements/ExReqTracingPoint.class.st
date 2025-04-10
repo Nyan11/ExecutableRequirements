@@ -1,7 +1,8 @@
 Class {
 	#name : 'ExReqTracingPoint',
-	#superclass : 'Breakpoint',
+	#superclass : 'DebugPoint',
 	#instVars : [
+		'isPrecondition',
 		'stepReports'
 	],
 	#classVars : [
@@ -15,47 +16,93 @@ Class {
 { #category : 'accessing' }
 ExReqTracingPoint class >> all [
 
-	^ TracingPoints ifNil: [
-		  TracingPoints := OrderedCollection new ]
-]
-
-{ #category : 'cleanup' }
-ExReqTracingPoint class >> cleanUp [
-
-	<script>
-	ExReqPreconditionTracingPoint allInstances do: [ :each | 
-		each link uninstall.
-		each remove ].
-	ExReqPostconditionTracingPoint allInstances do: [ :each |
-		each link uninstall.
-		each remove ].
-	self all removeAll.
-	Smalltalk image garbageCollect
+	^ TracingPoints ifNil: [ TracingPoints := Set new ]
 ]
 
 { #category : 'accessing' }
-ExReqTracingPoint class >> removeBreakpoint: aBreakpoint [
+ExReqTracingPoint >> bePostcondition [
 
-	| nodes |
-	nodes := aBreakpoint link nodes copy.
-	self notifyBreakpointRemoved: aBreakpoint fromNodes: nodes.
-	self all remove: aBreakpoint ifAbsent: [ ].
+	isPrecondition := false
 ]
 
-{ #category : 'api' }
-ExReqTracingPoint >> breakInContext: aContext node: aNode [
+{ #category : 'accessing' }
+ExReqTracingPoint >> bePrecondition [
 
-	self isEnabled ifFalse: [ ^ self ].
+	isPrecondition := true
+]
+
+{ #category : 'API' }
+ExReqTracingPoint >> hitWithContext: aContext [
+
+	"We do not emit an event for some obscure reason ..."
+	self enabled ifFalse: [ ^ false ].
+	self saveContext: aContext.
+	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])
+		ifFalse: [ ^ false ].
+	self sideEffectBehaviors do: [ :behavior | behavior execute ].
+	
+	self enabled: false.
+	self verifyStepsConditionWithContext: aContext.
+	self enabled: true.
+	^ true
+]
+
+{ #category : 'API' }
+ExReqTracingPoint >> hitWithContext: aContext value: aValue [
+
+	(self hitWithContext: aContext) ifFalse: [ ^ self ].
+	self enabled ifFalse: [ ^ self ].
 	self enabled: false.
 	self verifyStepsConditionWithContext: aContext.
 	self enabled: true
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 ExReqTracingPoint >> initialize [
 
 	super initialize.
-	enabled := true
+	isPrecondition := true.
+]
+
+{ #category : 'accessing' }
+ExReqTracingPoint >> isPrecondition [
+
+	^ isPrecondition
+]
+
+{ #category : 'default values' }
+ExReqTracingPoint >> metaLink [
+
+	^ self isPrecondition
+		ifTrue: [ self preconditionMetaLink ]
+		ifFalse: [ self postconditionMetaLink ]
+]
+
+{ #category : 'accessing' }
+ExReqTracingPoint >> name [
+
+	^ name ifNil: [ #TracingPoint ]
+]
+
+{ #category : 'default values' }
+ExReqTracingPoint >> postconditionMetaLink [
+
+	^ MetaLink new
+		  metaObject: self;
+		  options: #( #+ optionCompileOnLinkInstallation );
+		  selector: #hitWithContext:;
+		  control: #after;
+		  arguments: #( context )
+]
+
+{ #category : 'default values' }
+ExReqTracingPoint >> preconditionMetaLink [
+
+	^ MetaLink new
+		  metaObject: self;
+		  options: #( #+ optionCompileOnLinkInstallation );
+		  selector: #hitWithContext:;
+		  arguments: #( context )
 ]
 
 { #category : 'accessing' }
@@ -65,13 +112,25 @@ ExReqTracingPoint >> stepReports [
 ]
 
 { #category : 'accessing' }
-ExReqTracingPoint >> stepReports: aCollection [
+ExReqTracingPoint >> stepReports: anObject [
 
-	stepReports := aCollection
+	stepReports := anObject
 ]
 
-{ #category : 'api' }
+{ #category : 'accessing' }
+ExReqTracingPoint >> type [
+
+	^ #TracingPoint
+]
+
+{ #category : 'API' }
 ExReqTracingPoint >> verifyStepsConditionWithContext: aContext [
 
-	self shouldBeImplemented
+	self isPrecondition
+		ifTrue: [
+			self stepReports do: [ :stepReport |
+				stepReport verifyStepPreconditionWithContext: aContext ] ]
+		ifFalse: [
+			self stepReports do: [ :stepReport |
+				stepReport verifyStepPostconditionWithContext: aContext ] ]
 ]

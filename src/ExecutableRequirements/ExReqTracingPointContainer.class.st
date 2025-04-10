@@ -16,14 +16,36 @@ ExReqTracingPointContainer >> createTracingPoint [
 
 	| astNode |
 	astNode := self stepReports first step node.
-	preconditionTracingPoint := ExReqPreconditionTracingPoint new
+
+	preconditionTracingPoint := ExReqTracingPoint new
+		                            bePrecondition;
 		                            node: astNode;
+		                            stepReports: self stepReports;
 		                            yourself.
-	postconditionTracingPoint := ExReqPostconditionTracingPoint new
+	postconditionTracingPoint := ExReqTracingPoint new
+		                             bePostcondition;
 		                             node: astNode;
+		                             stepReports: self stepReports;
 		                             yourself.
-	preconditionTracingPoint stepReports: self stepReports.
-	postconditionTracingPoint stepReports: self stepReports.
+
+	self installTracingPoint: preconditionTracingPoint withBehaviors: {  }.
+	self installTracingPoint: postconditionTracingPoint withBehaviors: {  }
+]
+
+{ #category : 'as yet unclassified' }
+ExReqTracingPointContainer >> installTracingPoint: dp withBehaviors: aListOfBehaviorClasses [
+
+	| ml |
+	ml := dp metaLink.
+
+	dp link: ml.
+	dp install.
+	ExReqTracingPoint add: dp.
+
+	"adding behaviors"
+	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new ].
+
+	^ dp
 ]
 
 { #category : 'initialization' }
