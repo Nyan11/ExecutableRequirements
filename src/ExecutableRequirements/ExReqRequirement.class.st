@@ -44,6 +44,33 @@ ExReqRequirement >> asReport [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqRequirement >> associatedClasses [
+
+	^ (self verifications flatCollect: [ :each | each associatedClasses ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRequirement >> associatedMethods [
+
+	^ (self verifications flatCollect: [ :each | each associatedMethods ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRequirement >> associatedNodes [
+
+	^ (self verifications flatCollect: [ :each | each associatedNodes ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRequirement >> associatedPackages [
+
+	^ (self verifications flatCollect: [ :each | each associatedPackages ]) asSet
+]
+
 { #category : 'accessing' }
 ExReqRequirement >> description [
 	^ description

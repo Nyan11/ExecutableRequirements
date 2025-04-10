@@ -10,10 +10,51 @@ Class {
 	#tag : 'Model-Static'
 }
 
+{ #category : 'as yet unclassified' }
+ExReqRepository >> allImpacts [
+
+	| impacts |
+	impacts := self requirements copy collect: [ :each |
+		           ExReqRequirementImpact new
+			           requirement: each;
+			           yourself ].
+	impacts withIndexDo: [ :impact :index |
+		impact impactForCollection: (impacts allButFirst: index) ].
+	^ impacts
+]
+
 { #category : 'converting' }
 ExReqRepository >> asReport [
 
 	^ ExReqRepositoryReport new repository: self; yourself
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepository >> associatedClasses [
+
+	^ (self requirements flatCollect: [ :each | each associatedClasses ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepository >> associatedMethods [
+
+	^ (self requirements flatCollect: [ :each | each associatedMethods ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepository >> associatedNodes [
+
+	^ (self requirements flatCollect: [ :each | each associatedNodes ])
+		  asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepository >> associatedPackages [
+
+	^ (self requirements flatCollect: [ :each | each associatedPackages ])
+		  asSet
 ]
 
 { #category : 'accessing' }

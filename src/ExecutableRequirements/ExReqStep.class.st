@@ -19,6 +19,24 @@ ExReqStep >> asReport [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqStep >> associatedClass [
+
+	^ self associatedMethod methodClass
+]
+
+{ #category : 'as yet unclassified' }
+ExReqStep >> associatedMethod [
+
+	^ self node methodNode compiledMethod
+]
+
+{ #category : 'as yet unclassified' }
+ExReqStep >> associatedPackage [
+
+	^ self associatedClass package
+]
+
 { #category : 'testing' }
 ExReqStep >> hasPostcondition [
 

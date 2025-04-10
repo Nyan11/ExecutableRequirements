@@ -47,6 +47,30 @@ ExReqVerification >> asReport [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqVerification >> associatedClasses [
+
+	^ (self steps collect: [ :each | each associatedClass ]) asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqVerification >> associatedMethods [
+
+	^ (self steps collect: [ :each | each associatedMethod ]) asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqVerification >> associatedNodes [
+
+	^ (self steps collect: [ :each | each node ]) asSet
+]
+
+{ #category : 'as yet unclassified' }
+ExReqVerification >> associatedPackages [
+
+	^ (self steps collect: [ :each | each associatedPackage ]) asSet
+]
+
 { #category : 'initialization' }
 ExReqVerification >> initialize [
 

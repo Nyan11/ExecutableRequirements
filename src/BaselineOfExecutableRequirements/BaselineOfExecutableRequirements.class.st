@@ -37,7 +37,8 @@ BaselineOfExecutableRequirements >> coreDependencies: spec [
 BaselineOfExecutableRequirements >> corePackages: spec [
 
 	spec package: 'ExecutableRequirements'.
-	
+	spec package: 'ExecutableRequirements-Impacts'.
+
 	spec
 		package: 'ExecutableRequirements-Examples'
 		with: [ spec requires: #( 'ExecutableRequirements' ) ].
