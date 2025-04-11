@@ -10,19 +10,6 @@ Class {
 	#tag : 'Model-Static'
 }
 
-{ #category : 'as yet unclassified' }
-ExReqRepository >> allImpacts [
-
-	| impacts |
-	impacts := self requirements copy collect: [ :each |
-		           ExReqRequirementImpact new
-			           requirement: each;
-			           yourself ].
-	impacts withIndexDo: [ :impact :index |
-		impact impactForCollection: (impacts allButFirst: index) ].
-	^ impacts
-]
-
 { #category : 'converting' }
 ExReqRepository >> asReport [
 
