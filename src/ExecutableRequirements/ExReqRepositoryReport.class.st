@@ -53,6 +53,27 @@ ExReqRepositoryReport >> announcer [
 ]
 
 { #category : 'as yet unclassified' }
+ExReqRepositoryReport >> associatedClasses [
+	^ self repository associatedClasses.
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> associatedMethods [
+	^ self repository associatedMethods.
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> associatedNodes [
+	^ self repository associatedNodes.
+]
+
+{ #category : 'as yet unclassified' }
+ExReqRepositoryReport >> associatedPackages [
+
+	^ self repository associatedPackages.
+]
+
+{ #category : 'as yet unclassified' }
 ExReqRepositoryReport >> createTracingPoints [
 
 	| stepReports nodeDictionary |

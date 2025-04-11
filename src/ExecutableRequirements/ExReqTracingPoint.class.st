@@ -105,6 +105,18 @@ ExReqTracingPoint >> preconditionMetaLink [
 		  arguments: #( context )
 ]
 
+{ #category : 'removing' }
+ExReqTracingPoint >> remove [
+
+	| method |
+	super remove.
+	method := self target node methodNode compiledMethod.
+	method methodClass
+		compile: method sourceCode
+		classified: method protocolName
+		notifying: nil
+]
+
 { #category : 'accessing' }
 ExReqTracingPoint >> stepReports [
 

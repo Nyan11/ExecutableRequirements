@@ -17,6 +17,17 @@ ExReqExampleTODORequirements >> inspectRepositoryReport [
 	repository asReport inspect
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqExampleTODORequirements >> openOnExample [
+
+	<script: 'ExReqExampleTODORequirements new openOnExample'>
+	| repository |
+	repository := ExReqRepository new
+		              pragmaSelector: #ExReqTODO;
+		              yourself.
+	^ ExReqUIPresenter new repositoryReport: repository asReport ; open
+]
+
 { #category : 'tests' }
 ExReqExampleTODORequirements >> todoReq1 [
 
