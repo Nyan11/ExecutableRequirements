@@ -88,8 +88,8 @@ ExReqUIPresenter >> refreshWithDelay [
 	self isRefreshOnGoing ifTrue: [ ^ self ].
 	self isRefreshOnGoing: true.
 	[
-	self refreshIcons.
 	(Delay forMilliseconds: 500) wait.
+	self refreshIcons.
 	self isRefreshOnGoing: false ]
 		forkAt: Processor userBackgroundPriority
 		named: 'Requirement Application update icons'
