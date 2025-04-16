@@ -72,7 +72,7 @@ ExReqRepositoryReportTest >> testInstallTracingPoints [
 	self assert: self report tracingPoints isNotEmpty.
 	self report removeTracingPoints.
 	self assert: ExReqTracingPoint all isEmpty.
-	self assert: self report tracingPoints isNotEmpty.
+	self assert: self report tracingPoints isEmpty.
 ]
 
 { #category : 'tests' }

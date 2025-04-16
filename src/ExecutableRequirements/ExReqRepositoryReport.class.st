@@ -144,7 +144,7 @@ ExReqRepositoryReport >> removeTracingPoints [
 	self tracingPoints do: [ :each |
 		each preconditionTracingPoint remove.
 		each postconditionTracingPoint remove ].
-	self tracingPoints removeAll.
+	self tracingPoints: {}.
 	self isRunning: false.
 	self annouceTracingPointRemoved.
 ]
