@@ -1,8 +1,9 @@
 Class {
 	#name : 'ExReqRoassalViews',
 	#superclass : 'Object',
-	#category : 'ExecutableRequirements-Roassal',
-	#package : 'ExecutableRequirements-Roassal'
+	#category : 'ExecutableRequirements-Roassal-Views',
+	#package : 'ExecutableRequirements-Roassal',
+	#tag : 'Views'
 }
 
 { #category : 'as yet unclassified' }
