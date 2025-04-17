@@ -942,8 +942,108 @@ ExReqToploLoginRequirements >> capellaFile [
 '
 ]
 
+{ #category : 'requirement - generated' }
+ExReqToploLoginRequirements >> capella_requirement_1 [
+
+	<ExReqToploExample>
+	^ ExReqRequirement new
+		  title:
+			  'Person send "preliminary informations" to Authentification app';
+		  description:
+			  'The component named "Person"[a74ca346-8ba1-430e-8ca9-06c48d702ac5] in the function "Proof of identity"[6e26d3cf-5684-4117-ac88-17f5fb63eb0e] transmit "preliminary informations"[ae5df6ac-07ff-4177-8a1d-7f73b386dea8] to the component named "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] in the function "Authentification app"[d68548ae-78af-44d6-85de-b5e5229541b5]';
+		  sourceDocument: (ExReqCapellaDocument new
+				   id: 'ae5df6ac-07ff-4177-8a1d-7f73b386dea8';
+				   name: 'login_system';
+				   yourself);
+		  addVerification: [ :verif |
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
+				  withPrecondition: [ :obj |
+					  obj usernameValue isNotEmpty and: obj passwordValue isNotEmpty ] ];
+		  yourself
+]
+
+{ #category : 'requirement - generated' }
+ExReqToploLoginRequirements >> capella_requirement_2 [
+
+	<ExReqToploExample>
+	^ ExReqRequirement new
+		  title: 'Authentification app send "an identity" to database';
+		  description:
+			  'The component named "Authentification app"[d68548ae-78af-44d6-85de-b5e5229541b5] in the function "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] transmit "an identity"[eb51b009-ff4b-4825-9b77-a7509093bbcd] to the component named "Verify Identity in database"[95bc149e-bce3-42fe-8d8f-7a4f123dea05] in the function "database"[a29b6cea-941d-416a-b6c0-818e73a84368]';
+		  sourceDocument: (ExReqCapellaDocument new
+				   id: 'eb51b009-ff4b-4825-9b77-a7509093bbcd';
+				   name: 'login_system';
+				   yourself);
+				 addVerification: [ :verif |
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast.
+				verif addStepOnAST: (ExReqToploLoginSimulation >> #authentificateUsername:password:) ast withPrecondition: [ :obj :args |
+					args size = 2. ]
+				 ];
+		  yourself
+]
+
+{ #category : 'requirement - generated' }
+ExReqToploLoginRequirements >> capella_requirement_3 [
+
+	<ExReqToploExample>
+	^ ExReqRequirement new
+		  title: 'database send "error" to Authentification app';
+		  description:
+			  'The component named "database"[a29b6cea-941d-416a-b6c0-818e73a84368] in the function "Verify Identity in database"[95bc149e-bce3-42fe-8d8f-7a4f123dea05] transmit "error"[141c2297-10ac-4e90-82c4-83fc9c7b3b14] to the component named "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] in the function "Authentification app"[d68548ae-78af-44d6-85de-b5e5229541b5]';
+		  sourceDocument: (ExReqCapellaDocument new
+				   id: '141c2297-10ac-4e90-82c4-83fc9c7b3b14';
+				   name: 'login_system';
+				   yourself);
+			addVerification: [ :verif |
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast withPrecondition: [ :obj | obj loginStatusContainer isVisible not ].
+				verif addStepOnAST: (ExReqToploLoginSimulation >> #authentificateUsername:password:) ast withPrecondition: [ :obj :args |
+					(obj perform: #authentificateUsername:password: withArguments: args) not. ].
+				verif addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast withPostcondition: [ :obj :args |
+					(obj loginStatusContainer isVisible). ]
+				 ];
+		  yourself
+]
+
 { #category : 'as yet unclassified' }
-ExReqToploLoginRequirements >> extractSimpleModel [
+ExReqToploLoginRequirements >> compiledSourceCodeIntoRequirementMethods [
+
+	| pragma methodPrefix sourceCodes index methodString |
+	pragma := #ExReqToploExample2.
+	methodPrefix := 'new_capella_requirement_'.
+	index := 1.
+	sourceCodes := self transformRequirementsIntoSourceCode.
+
+	methodString := '<1s><2p><r><r><t>%<<3s>><r><r><t>^ <4s>'.
+
+	sourceCodes do: [ :source |
+		| fullMethod |
+		fullMethod := methodString expandMacrosWithArguments: {
+				              methodPrefix.
+				              index.
+				              pragma.
+				              source }.
+		index := index + 1.
+		self class compile: fullMethod classified: 'requirement - generated' ]
+]
+
+{ #category : 'as yet unclassified' }
+ExReqToploLoginRequirements >> openOnExample [
+
+	<script: 'ExReqToploLoginRequirements new openOnExample'>
+	| repository |
+	repository := ExReqRepository new
+		              pragmaSelector: #ExReqToploExample;
+		              yourself.
+	^ ExReqUIPresenter new
+		  repositoryReport: repository asReport;
+		  open.
+]
+
+{ #category : 'as yet unclassified' }
+ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 
 	| project simple |
 	project := CapellaXMLImporter new
@@ -955,6 +1055,18 @@ ExReqToploLoginRequirements >> extractSimpleModel [
 	simple filterFunctionsOnIds:
 		{ #'300a7f2b-c0d2-48cd-854b-d9a8fcbadc24' }.
 
-	(CapellaSimpleProject roassalGraph: simple) inspect.
+	"(CapellaSimpleProject roassalGraph: simple) inspect."
 	^ simple
+]
+
+{ #category : 'as yet unclassified' }
+ExReqToploLoginRequirements >> transformRequirementsIntoSourceCode [
+
+	^ self transformSimpleModelIntoRequirements collect: [ :each | Stash new serialize: each ]
+]
+
+{ #category : 'as yet unclassified' }
+ExReqToploLoginRequirements >> transformSimpleModelIntoRequirements [
+
+	^ self transformCapellaFileIntoSimpleModel asExReqRequirements
 ]
