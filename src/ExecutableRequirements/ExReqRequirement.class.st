@@ -117,13 +117,6 @@ ExReqRequirement >> sourceDocument: anObject [
 	sourceDocument := anObject
 ]
 
-{ #category : 'as yet unclassified' }
-ExReqRequirement >> stashAccessors [
-
-	<stashAccessors>
-	^ { #title . #description . #sourceDocument }
-]
-
 { #category : 'accessing' }
 ExReqRequirement >> title [
 	^ title
