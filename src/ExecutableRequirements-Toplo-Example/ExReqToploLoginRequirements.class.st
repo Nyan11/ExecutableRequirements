@@ -948,9 +948,9 @@ ExReqToploLoginRequirements >> capella_requirement_1 [
 	<ExReqToploExample>
 	^ ExReqRequirement new
 		  title:
-			  'Person send "preliminary informations" to Authentification app';
+			  'Person send "preliminary informations" to Authentication app';
 		  description:
-			  'The component named "Person"[a74ca346-8ba1-430e-8ca9-06c48d702ac5] in the function "Proof of identity"[6e26d3cf-5684-4117-ac88-17f5fb63eb0e] transmit "preliminary informations"[ae5df6ac-07ff-4177-8a1d-7f73b386dea8] to the component named "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] in the function "Authentification app"[d68548ae-78af-44d6-85de-b5e5229541b5]';
+			  'The component named "Person"[a74ca346-8ba1-430e-8ca9-06c48d702ac5] in the function "Proof of identity"[6e26d3cf-5684-4117-ac88-17f5fb63eb0e] transmit "preliminary informations"[ae5df6ac-07ff-4177-8a1d-7f73b386dea8] to the component named "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] in the function "Authentication app"[d68548ae-78af-44d6-85de-b5e5229541b5]';
 		  sourceDocument: (ExReqCapellaDocument new
 				   id: 'ae5df6ac-07ff-4177-8a1d-7f73b386dea8';
 				   name: 'login_system';
@@ -996,14 +996,23 @@ ExReqToploLoginRequirements >> capella_requirement_3 [
 				   id: '141c2297-10ac-4e90-82c4-83fc9c7b3b14';
 				   name: 'login_system';
 				   yourself);
-			addVerification: [ :verif |
+		  addVerification: [ :verif |
 			  verif
-				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast withPrecondition: [ :obj | obj loginStatusContainer isVisible not ].
-				verif addStepOnAST: (ExReqToploLoginSimulation >> #authentificateUsername:password:) ast withPrecondition: [ :obj :args |
-					(obj perform: #authentificateUsername:password: withArguments: args) not. ].
-				verif addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast withPostcondition: [ :obj :args |
-					(obj loginStatusContainer isVisible). ]
-				 ];
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
+				  withPrecondition: [ :obj |
+				  obj loginStatusContainer isVisible not ].
+			  verif
+				  addStepOnAST:
+				  (ExReqToploLoginSimulation >> #authenticateUsername:password:)
+					  ast
+				  withPrecondition: [ :obj :args |
+					  (obj
+						   perform: #authenticateUsername:password:
+						   withArguments: args) not ].
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
+				  withPostcondition: [ :obj :args |
+				  obj loginStatusContainer isVisible ] ];
 		  yourself
 ]
 

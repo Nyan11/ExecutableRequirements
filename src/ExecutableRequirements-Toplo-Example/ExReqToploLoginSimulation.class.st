@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ExReqToploLoginSimulation class >> authentificationPage [
+ExReqToploLoginSimulation class >> authenticationPage [
 
 	| widget background space |
 	widget := self defaultWidget.
@@ -37,8 +37,8 @@ ExReqToploLoginSimulation class >> defaultWidget [
 	| widget database |
 	database := self new.
 	widget := ExReqToploLoginWidget new.
-	widget authentificationBlock: [ :user :pass |
-		database authentificateUsername: user password: pass ].
+	widget authenticationBlock: [ :user :pass |
+		database authenticateUsername: user password: pass ].
 	widget loginBlock: [ self inform: 'Login success !' ].
 	^ widget
 ]
@@ -47,19 +47,12 @@ ExReqToploLoginSimulation class >> defaultWidget [
 ExReqToploLoginSimulation class >> open [
 
 	<script>
-	| space |
-	space := self authentificationPage show.
-	space show.
-	space
-		addEventHandlerOn: BlSpaceShownEvent
-		do: [ :evt |
-			evt source pulse.
-		evt source root background: (Color fromHexString: 'a1b8cc') ].
-	^ space
+	^ self authenticationPage show.
+	
 ]
 
 { #category : 'as yet unclassified' }
-ExReqToploLoginSimulation >> authentificateUsername: aUsernameString password: aPasswordString [
+ExReqToploLoginSimulation >> authenticateUsername: aUsernameString password: aPasswordString [
 
 	self database
 		at: aUsernameString

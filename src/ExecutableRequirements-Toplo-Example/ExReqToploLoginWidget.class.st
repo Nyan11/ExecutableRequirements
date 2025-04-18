@@ -3,7 +3,7 @@ Class {
 	#superclass : 'ToElement',
 	#instVars : [
 		'loginBlock',
-		'authentificationBlock'
+		'authenticationBlock'
 	],
 	#category : 'ExecutableRequirements-Toplo-Example',
 	#package : 'ExecutableRequirements-Toplo-Example'
@@ -337,15 +337,15 @@ tobutton3 := ToButton new.
 ]
 
 { #category : 'as yet unclassified' }
-ExReqToploLoginWidget >> authentificationBlock [
+ExReqToploLoginWidget >> authenticationBlock [
 
-	^ authentificationBlock
+	^ authenticationBlock
 ]
 
 { #category : 'as yet unclassified' }
-ExReqToploLoginWidget >> authentificationBlock: aBlock [
+ExReqToploLoginWidget >> authenticationBlock: aBlock [
 
-	authentificationBlock := aBlock
+	authenticationBlock := aBlock
 ]
 
 { #category : 'initialization' }
@@ -358,7 +358,7 @@ ExReqToploLoginWidget >> initialize [
 		c vertical fitContent ].
 	self usernameInput withoutLineBreak.
 	self passwordInput withoutLineBreak.
-	authentificationBlock := [ :username :password | false ].
+	authenticationBlock := [ :username :password | false ].
 	loginBlock := [  ].
 	self loginButton whenClickedDo: [ self loginAction ].
 	self loginStatusContainer visibility: BlVisibility gone
@@ -367,7 +367,7 @@ ExReqToploLoginWidget >> initialize [
 { #category : 'as yet unclassified' }
 ExReqToploLoginWidget >> loginAction [
 
-	(self authentificationBlock
+	(self authenticationBlock
 		 value: self usernameValue
 		 value: self passwordValue)
 		ifTrue: [ self loginBlock value ]
