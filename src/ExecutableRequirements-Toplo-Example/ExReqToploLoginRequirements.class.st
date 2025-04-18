@@ -1055,7 +1055,7 @@ ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 	simple filterFunctionsOnIds:
 		{ #'300a7f2b-c0d2-48cd-854b-d9a8fcbadc24' }.
 
-	"(CapellaSimpleProject roassalGraph: simple) inspect."
+	(CapellaSimpleProject roassalGraph: simple) inspect.
 	^ simple
 ]
 

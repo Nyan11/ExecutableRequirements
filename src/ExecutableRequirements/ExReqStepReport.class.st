@@ -9,7 +9,8 @@ Class {
 		'preconditionValidity',
 		'postconditionValidity',
 		'stepNumber',
-		'numberOfSteps'
+		'numberOfSteps',
+		'trigger'
 	],
 	#category : 'ExecutableRequirements-Model-Report',
 	#package : 'ExecutableRequirements',
@@ -56,13 +57,19 @@ ExReqStepReport >> hasPreviousStepReport [
 	^ previousStepReport isNotNil
 ]
 
+{ #category : 'testing' }
+ExReqStepReport >> hasTrigger [
+
+	^ trigger
+]
+
 { #category : 'as yet unclassified' }
 ExReqStepReport >> initialize [
 
 	super initialize.
+	trigger := false.
 	preconditionValidity := false.
-	postconditionValidity := false.
-	
+	postconditionValidity := false
 ]
 
 { #category : 'testing' }
@@ -80,7 +87,8 @@ ExReqStepReport >> isStepReport [
 
 { #category : 'testing' }
 ExReqStepReport >> isValid [
-	^ self preconditionIsValid and: [self postconditionIsValid].
+
+	^ self hasTrigger and: [ self preconditionIsValid and: [ self postconditionIsValid ] ]
 ]
 
 { #category : 'accessing' }
@@ -203,6 +211,7 @@ ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
 { #category : 'as yet unclassified' }
 ExReqStepReport >> verifyStepPreconditionWithContext: aContext [
 
+	trigger := true.
 	preconditionValidity ifTrue: [ ^ self ].
 	self isPreviousStepValid ifFalse: [
 		preconditionValidity := false.
@@ -216,5 +225,5 @@ ExReqStepReport >> verifyStepPreconditionWithContext: aContext [
 						                        aContext arguments.
 						                        self requirement } ]
 		                        ifFalse: [ true ].
-	self isValid ifTrue: [ self announceValidity ].
+	self isValid ifTrue: [ self announceValidity ]
 ]

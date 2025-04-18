@@ -14,13 +14,13 @@ ExReqToploLoginWidget class >> loginPanel [
 	"This class has been generated using Pyramid.
 
 	By: YannLEGOFF
-	2025-04-16 12:07:30"
+	2025-04-18 13:31:54"
 
 	<pyStash>
-	^ [ | tobutton1 blinsets2 blinsets3 |
-tobutton1 := ToButton new.
+	^ [ | blinsets1 blinsets2 tobutton3 |
+blinsets1 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 3.0.
 blinsets2 := BlInsets top: 15.0 right: 0.0 bottom: 0.0 left: 0.0.
-blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
+tobutton3 := ToButton new.
 {(ToPane new
    background: (BlPaintBackground new
          paint: (BlColorPaint new
@@ -45,9 +45,9 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                            paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                            yourself) . 
                         (BlFontSizeAttribute new
-                           size: 45;
+                           size: 40;
                            yourself)} rope: (BlCollectionRope new
-                           collection: 'Bienvenue !';
+                           collection: 'Welcome !';
                            yourself));
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
@@ -67,6 +67,7 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                      color: (Color r: 0.7996089931573802 g: 0.20039100684261973 b: 0.20039100684261973 alpha: 1.0);
                      yourself);
                build);
+         visibility: BlVisibility gone;
          addChildren: {(ToLabel new
                text: (BlRopedText new
                      rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
@@ -82,13 +83,12 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'Mauvais';
+                                 collection: 'Wrong';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #Mauvais;
+                  constraints margin: blinsets1 ];
                yourself) . 
             (ToLabel new
                text: (BlRopedText new
@@ -105,13 +105,12 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'identifiant';
+                                 collection: 'login';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #identifiant;
+                  constraints margin: blinsets1 ];
                yourself) . 
             (ToLabel new
                text: (BlRopedText new
@@ -128,13 +127,12 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'ou';
+                                 collection: 'informations';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #ou;
+                  constraints margin: blinsets1 ];
                yourself) . 
             (ToLabel new
                text: (BlRopedText new
@@ -151,13 +149,12 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'mauvais';
+                                 collection: 'or';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #mauvais;
+                  constraints margin: blinsets1 ];
                yourself) . 
             (ToLabel new
                text: (BlRopedText new
@@ -174,13 +171,12 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'mot';
+                                 collection: 'expired';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #mot;
+                  constraints margin: blinsets1 ];
                yourself) . 
             (ToLabel new
                text: (BlRopedText new
@@ -197,107 +193,14 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'de';
+                                 collection: 'account.';
                                  yourself));
                      yourself);
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #de;
-               yourself) . 
-            (ToLabel new
-               text: (BlRopedText new
-                     rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
-                                 weight: 600;
-                                 yourself) . 
-                              (BlFontFamilyDefaultAttribute new
-                                 name: 'Courier';
-                                 yourself) . 
-                              (BlFontSizeDefaultAttribute new
-                                 size: 14;
-                                 yourself) . 
-                              AlbTextParagraphLineSpacingAttribute new . 
-                              (BlTextForegroundAttribute new
-                                 paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
-                                 yourself)} rope: (BlCollectionRope new
-                                 collection: 'passe';
-                                 yourself));
-                     yourself);
-               constraintsDo: [:constraints |  constraints horizontal fitContent.
-                  constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #passe;
-               yourself) . 
-            (ToLabel new
-               text: (BlRopedText new
-                     rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
-                                 weight: 600;
-                                 yourself) . 
-                              (BlFontFamilyDefaultAttribute new
-                                 name: 'Courier';
-                                 yourself) . 
-                              (BlFontSizeDefaultAttribute new
-                                 size: 14;
-                                 yourself) . 
-                              AlbTextParagraphLineSpacingAttribute new . 
-                              (BlTextForegroundAttribute new
-                                 paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
-                                 yourself)} rope: (BlCollectionRope new
-                                 collection: 'ou';
-                                 yourself));
-                     yourself);
-               constraintsDo: [:constraints |  constraints horizontal fitContent.
-                  constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #ou;
-               yourself) . 
-            (ToLabel new
-               text: (BlRopedText new
-                     rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
-                                 weight: 600;
-                                 yourself) . 
-                              (BlFontFamilyDefaultAttribute new
-                                 name: 'Courier';
-                                 yourself) . 
-                              (BlFontSizeDefaultAttribute new
-                                 size: 14;
-                                 yourself) . 
-                              AlbTextParagraphLineSpacingAttribute new . 
-                              (BlTextForegroundAttribute new
-                                 paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
-                                 yourself)} rope: (BlCollectionRope new
-                                 collection: 'compte';
-                                 yourself));
-                     yourself);
-               constraintsDo: [:constraints |  constraints horizontal fitContent.
-                  constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #compte;
-               yourself) . 
-            (ToLabel new
-               text: (BlRopedText new
-                     rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
-                                 weight: 600;
-                                 yourself) . 
-                              (BlFontFamilyDefaultAttribute new
-                                 name: 'Courier';
-                                 yourself) . 
-                              (BlFontSizeDefaultAttribute new
-                                 size: 14;
-                                 yourself) . 
-                              AlbTextParagraphLineSpacingAttribute new . 
-                              (BlTextForegroundAttribute new
-                                 paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
-                                 yourself)} rope: (BlCollectionRope new
-                                 collection: 'expiré.';
-                                 yourself));
-                     yourself);
-               constraintsDo: [:constraints |  constraints horizontal fitContent.
-                  constraints vertical fitContent.
-                  constraints margin: blinsets3 ];
-               id: #'expiré.';
+                  constraints margin: blinsets1 ];
                yourself)};
-         constraintsDo: [:constraints |  constraints horizontal fitContent.
+         constraintsDo: [:constraints |  constraints horizontal matchParent.
             constraints vertical fitContent.
             constraints padding: (BlInsets all: 15.0).
             constraints margin: (BlInsets top: 15.0 right: 0.0 bottom: 0.0 left: 0.0) ];
@@ -322,7 +225,7 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                         (BlFontSizeAttribute new
                            size: 16;
                            yourself)} rope: (BlCollectionRope new
-                           collection: 'Identifiant';
+                           collection: 'Username';
                            yourself));
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
@@ -360,7 +263,7 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                         (BlFontSizeAttribute new
                            size: 16;
                            yourself)} rope: (BlCollectionRope new
-                           collection: 'Mot de passe';
+                           collection: 'Password';
                            yourself));
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
@@ -380,7 +283,7 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
             constraints padding: (BlInsets top: 4.0 right: 8.0 bottom: 4.0 left: 8.0) ];
          id: #passwordInput;
          yourself) . 
-      (tobutton1
+      (tobutton3
          endFlexible: true;
          flexible: true;
          middleElement: (ToLabel new
@@ -398,10 +301,10 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
                               (BlTextForegroundAttribute new
                                  paint: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0);
                                  yourself)} rope: (BlCollectionRope new
-                                 collection: 'Connexion';
+                                 collection: 'Login';
                                  yourself));
                      yourself);
-               addStamp: #'parent-button' withValue: tobutton1;
+               addStamp: #'parent-button' withValue: tobutton3;
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent ];
                yourself);
@@ -425,7 +328,7 @@ blinsets3 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 2.0.
             constraints margin: blinsets2 ];
          id: #loginButton;
          yourself)};
-   constraintsDo: [:constraints |  constraints horizontal fitContent.
+   constraintsDo: [:constraints |  constraints horizontal exact: 260.0.
       constraints vertical fitContent.
       constraints padding: (BlInsets all: 30.0) ];
    layout: BlLinearLayout vertical;
@@ -458,7 +361,7 @@ ExReqToploLoginWidget >> initialize [
 	authentificationBlock := [ :username :password | false ].
 	loginBlock := [  ].
 	self loginButton whenClickedDo: [ self loginAction ].
-	self loginStatusContainer visibility: BlVisibility hidden
+	self loginStatusContainer visibility: BlVisibility gone
 ]
 
 { #category : 'as yet unclassified' }

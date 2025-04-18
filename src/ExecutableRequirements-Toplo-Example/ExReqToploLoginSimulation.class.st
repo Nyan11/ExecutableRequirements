@@ -8,17 +8,54 @@ Class {
 	#package : 'ExecutableRequirements-Toplo-Example'
 }
 
-{ #category : 'instance creation' }
-ExReqToploLoginSimulation class >> open [
+{ #category : 'as yet unclassified' }
+ExReqToploLoginSimulation class >> authentificationPage [
 
-	<script>
+	| widget background space |
+	widget := self defaultWidget.
+	background := BlElement new
+		              background: (Color fromHexString: 'a1b8cc');
+		              layout: BlFrameLayout new;
+		              constraintsDo: [ :c |
+			              c horizontal matchParent.
+			              c vertical matchParent ];
+		              yourself.
+	space := BlSpace new.
+	space root layout: BlFrameLayout new.
+	space root addChild: background.
+	background addChild: widget.
+	widget constraintsDo: [ :c |
+		c frame vertical alignCenter.
+		c frame horizontal alignCenter ].
+	^ space
+]
+
+{ #category : 'instance creation' }
+ExReqToploLoginSimulation class >> defaultWidget [
+
+	<script: 'self defaultWidget inspect'>
 	| widget database |
 	database := self new.
 	widget := ExReqToploLoginWidget new.
 	widget authentificationBlock: [ :user :pass |
 		database authentificateUsername: user password: pass ].
 	widget loginBlock: [ self inform: 'Login success !' ].
-	widget openInNewSpace
+	^ widget
+]
+
+{ #category : 'instance creation' }
+ExReqToploLoginSimulation class >> open [
+
+	<script>
+	| space |
+	space := self authentificationPage show.
+	space show.
+	space
+		addEventHandlerOn: BlSpaceShownEvent
+		do: [ :evt |
+			evt source pulse.
+		evt source root background: (Color fromHexString: 'a1b8cc') ].
+	^ space
 ]
 
 { #category : 'as yet unclassified' }
