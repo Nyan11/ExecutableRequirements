@@ -11,6 +11,11 @@ Class {
 	#tag : 'Model-Report'
 }
 
+{ #category : 'as yet unclassified' }
+ExReqAbstractReport >> closeReport [
+	self subReports do: #closeReport.
+]
+
 { #category : 'initialization' }
 ExReqAbstractReport >> initialize [
 

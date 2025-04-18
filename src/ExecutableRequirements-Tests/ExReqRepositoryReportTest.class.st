@@ -37,7 +37,9 @@ ExReqRepositoryReportTest >> setUp [
 ExReqRepositoryReportTest >> tearDown [
 
 	super tearDown.
-	self report removeTracingPoints
+	self report removeTracingPoints.
+	self report closeReport.
+	repository := nil
 ]
 
 { #category : 'tests' }

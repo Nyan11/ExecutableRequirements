@@ -79,8 +79,7 @@ ExReqMockRequirements >> testReq5 [
 		  title: 'A requirement can have a title';
 		  addVerification: [ :verify |
 			  verify
-				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq5) ast)
+				  addStepOnAST: (ExReqMockRequirements methodNamed: #testReq5) ast
 				  withPostcondition: [ :obj :arguments :requirement |
 					  requirement title = 'A requirement can have a title' and: [
 							  obj title = 'A requirement can have a title' ] ] ];

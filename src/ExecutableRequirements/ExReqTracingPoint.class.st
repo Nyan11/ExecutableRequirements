@@ -19,6 +19,13 @@ ExReqTracingPoint class >> all [
 	^ TracingPoints ifNil: [ TracingPoints := Set new ]
 ]
 
+{ #category : 'removing' }
+ExReqTracingPoint class >> remove: aDebugPoint [
+
+	self all remove: aDebugPoint ifAbsent: [  ].
+	DebugPoint all remove: aDebugPoint ifAbsent: [  ].
+]
+
 { #category : 'accessing' }
 ExReqTracingPoint >> bePostcondition [
 
@@ -110,11 +117,11 @@ ExReqTracingPoint >> remove [
 
 	| method |
 	super remove.
-	method := self target node methodNode compiledMethod.
+	"method := self target node methodNode compiledMethod.
 	method methodClass
 		compile: method sourceCode
 		classified: method protocolName
-		notifying: nil
+		notifying: nil"
 ]
 
 { #category : 'accessing' }

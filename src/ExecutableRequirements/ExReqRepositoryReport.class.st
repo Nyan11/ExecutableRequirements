@@ -74,6 +74,14 @@ ExReqRepositoryReport >> associatedPackages [
 ]
 
 { #category : 'as yet unclassified' }
+ExReqRepositoryReport >> closeReport [
+
+	super closeReport.
+	repository := nil.
+	requirementReports := {  }
+]
+
+{ #category : 'as yet unclassified' }
 ExReqRepositoryReport >> createTracingPoints [
 
 	| stepReports nodeDictionary |

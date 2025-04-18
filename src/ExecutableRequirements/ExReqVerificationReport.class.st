@@ -11,6 +11,15 @@ Class {
 	#tag : 'Model-Report'
 }
 
+{ #category : 'as yet unclassified' }
+ExReqVerificationReport >> closeReport [
+
+	super closeReport.
+	requirement := nil.
+	verification := nil.
+	stepReports := {  }
+]
+
 { #category : 'testing' }
 ExReqVerificationReport >> isValid [
 

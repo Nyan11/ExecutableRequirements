@@ -16,6 +16,22 @@ Class {
 	#tag : 'Model-Report'
 }
 
+{ #category : 'as yet unclassified' }
+ExReqStepReport >> announceValidity [
+
+	self repositoryReport annouceStepReportIsValid: self
+]
+
+{ #category : 'as yet unclassified' }
+ExReqStepReport >> closeReport [
+
+	super closeReport.
+	step := nil.
+	requirement := nil.
+	previousStepReport := nil.
+	nextStepReport := nil
+]
+
 { #category : 'accessing' }
 ExReqStepReport >> hasNextStepReport [
 
@@ -94,13 +110,13 @@ ExReqStepReport >> numberOfSteps: anObject [
 { #category : 'as yet unclassified' }
 ExReqStepReport >> postconditionIsValid [
 
-	^ postconditionValidity
+	^ postconditionValidity or: [ self hasPostcondition not ]
 ]
 
 { #category : 'as yet unclassified' }
 ExReqStepReport >> preconditionIsValid [
 
-	^ preconditionValidity
+	^ preconditionValidity or: [ self hasPrecondition not ]
 ]
 
 { #category : 'accessing' }
@@ -166,44 +182,39 @@ ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
 	3 - Postcondition not nil -> evaluation
 	"
 
-	self postconditionIsValid ifTrue: [ ^ self ].
+	postconditionValidity ifTrue: [ ^ self ].
 	self preconditionIsValid ifFalse: [ ^ self ].
 	self step postcondition ifNil: [
 		postconditionValidity := true.
+		self announceValidity.
 		^ self ].
-	preconditionValidity := postconditionValidity := self step
-		                                                 postcondition
-		                                                 valueWithEnoughArguments:
-			                                                 {
-				                                                 aContext receiver.
-				                                                 aContext
-					                                                 arguments.
-				                                                 self requirement }.
-	self isValid ifTrue: [
-		self repositoryReport annouceStepReportIsValid: self ]
+	postconditionValidity := self hasPostcondition
+		                         ifTrue: [
+			                         self step postcondition
+				                         valueWithEnoughArguments: {
+						                         aContext receiver.
+						                         aContext arguments.
+						                         self requirement } ]
+		                         ifFalse: [ true ].
+
+	self isValid ifTrue: [ self announceValidity ]
 ]
 
 { #category : 'as yet unclassified' }
 ExReqStepReport >> verifyStepPreconditionWithContext: aContext [
-	"
-	0 - Precondition ok -> ok
-	1 - Previous step valid
-	2 - Precondition =  nil -> true
-	3 - Precondition not nil -> evaluation
-	"
-	self preconditionIsValid ifTrue: [ ^ self ].
+
+	preconditionValidity ifTrue: [ ^ self ].
 	self isPreviousStepValid ifFalse: [
 		preconditionValidity := false.
 		postconditionValidity := false.
 		^ self ].
-
-	self step precondition ifNil: [
-		preconditionValidity := true.
-		^ self ].
-
-	preconditionValidity := self step precondition
-		                        valueWithEnoughArguments: {
-				                        aContext receiver.
-				                        aContext arguments.
-				                        self requirement }
+	preconditionValidity := self hasPrecondition
+		                        ifTrue: [
+			                        self step precondition
+				                        valueWithEnoughArguments: {
+						                        aContext receiver.
+						                        aContext arguments.
+						                        self requirement } ]
+		                        ifFalse: [ true ].
+	self isValid ifTrue: [ self announceValidity ].
 ]
