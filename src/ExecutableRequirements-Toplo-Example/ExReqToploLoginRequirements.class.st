@@ -978,7 +978,7 @@ ExReqToploLoginRequirements >> capella_requirement_2 [
 				 addVerification: [ :verif |
 			  verif
 				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast.
-				verif addStepOnAST: (ExReqToploLoginSimulation >> #authentificateUsername:password:) ast withPrecondition: [ :obj :args |
+				verif addStepOnAST: (ExReqToploLoginSimulation >> #authenticateUsername:password:) ast withPrecondition: [ :obj :args |
 					args size = 2. ]
 				 ];
 		  yourself
