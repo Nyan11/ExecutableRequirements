@@ -57,6 +57,7 @@ ExReqRepositoryReportTest >> testExecuteTracingPoints [
 
 	| requirement requirementReport |
 	self report installTracingPoints.
+	ExReqMockRequirements new testReq1.
 	requirement := ExReqMockRequirements new testReq7.
 	requirementReport := self report findRequirementReport: requirement.
 	self assert: requirementReport isValid.
@@ -111,7 +112,7 @@ ExReqRepositoryReportTest >> testStepReportIsValidEvent [
 		do: [ :evt | success := true ]
 		for: self.
 	self report installTracingPoints.
-	ExReqMockRequirements new testReq7.
+	ExReqMockRequirements new testReq1.
 	self assert: success
 ]
 

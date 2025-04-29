@@ -5,7 +5,7 @@ Class {
 	#package : 'ExecutableRequirements-Toplo-Example'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capella file' }
 ExReqToploLoginRequirements >> capellaFile [ 
 
 	^ '<?xml version="1.0" encoding="UTF-8"?>
@@ -948,7 +948,7 @@ ExReqToploLoginRequirements >> capella_requirement_1 [
 	<ExReqToploExample>
 	^ ExReqRequirement new
 		  title:
-			  'Person send "preliminary informations" to Authentication app';
+			  'Person shall send "preliminary informations" to Authentication app';
 		  description:
 			  'The component named "Person"[a74ca346-8ba1-430e-8ca9-06c48d702ac5] in the function "Proof of identity"[6e26d3cf-5684-4117-ac88-17f5fb63eb0e] transmit "preliminary informations"[ae5df6ac-07ff-4177-8a1d-7f73b386dea8] to the component named "Input Identity UI"[300a7f2b-c0d2-48cd-854b-d9a8fcbadc24] in the function "Authentication app"[d68548ae-78af-44d6-85de-b5e5229541b5]';
 		  sourceDocument: (ExReqCapellaDocument new
@@ -1016,7 +1016,7 @@ ExReqToploLoginRequirements >> capella_requirement_3 [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 4' }
 ExReqToploLoginRequirements >> compiledSourceCodeIntoRequirementMethods [
 
 	| pragma methodPrefix sourceCodes index methodString |
@@ -1038,7 +1038,7 @@ ExReqToploLoginRequirements >> compiledSourceCodeIntoRequirementMethods [
 		self class compile: fullMethod classified: 'requirement - generated' ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'script' }
 ExReqToploLoginRequirements >> openOnExample [
 
 	<script: 'ExReqToploLoginRequirements new openOnExample'>
@@ -1051,7 +1051,7 @@ ExReqToploLoginRequirements >> openOnExample [
 		  open.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 1' }
 ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 
 	| project simple |
@@ -1068,13 +1068,13 @@ ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 	^ simple
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 3' }
 ExReqToploLoginRequirements >> transformRequirementsIntoSourceCode [
 
 	^ self transformSimpleModelIntoRequirements collect: [ :each | Stash new serialize: each ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 2' }
 ExReqToploLoginRequirements >> transformSimpleModelIntoRequirements [
 
 	^ self transformCapellaFileIntoSimpleModel asExReqRequirements

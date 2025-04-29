@@ -31,11 +31,11 @@ ExReqRepositoryTest >> testRequirementsAreTraceable [
 		                      each isPharoImageDocument ].
 	mockDocuments := documents select: [ :each | each isMockDocument ].
 
-	self assert: pharoImageDocument size equals: ExReqMockRequirements methods size - 1.
+	self assert: pharoImageDocument size equals: ExReqMockRequirements methods size - 2.
 	self
 		assertCollection: (pharoImageDocument collect: #method)
 		includesAll: (ExReqMockRequirements methods reject: [ :each |
-				 each selector = #testReq3 ]).
+				 each selector = #testReq3 or: [ each selector = #resetMethod ] ]).
 
 	self assert: mockDocuments size equals: 1.
 	self assert: mockDocuments first requirementId equals: #testReq3
