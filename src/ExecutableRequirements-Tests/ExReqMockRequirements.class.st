@@ -136,7 +136,7 @@ ExReqMockRequirements >> testReq7 [
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					 ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
+					  ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
 						   select: [ :each | each isSequence ]) first
 				  withPrecondition: [ :obj :arguments :requirement | true ]
 				  withPostcondition: [ :obj :arguments :requirement | true ] ];

@@ -10,8 +10,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+ExReqMockTestObject >> methodToTestMetaSafeRecursion [
+
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
 ExReqMockTestObject >> methodToTestTheNonLocalReturn [
 
 	x := [ true ifTrue: [ ^ Color red ] ] value.
 	^ Color blue
+]
+
+{ #category : 'as yet unclassified' }
+ExReqMockTestObject >> methodToTestThread [
 ]

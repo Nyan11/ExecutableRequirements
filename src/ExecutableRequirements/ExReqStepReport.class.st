@@ -27,10 +27,6 @@ ExReqStepReport >> announceValidity [
 ExReqStepReport >> closeReport [
 
 	super closeReport.
-	step := nil.
-	requirement := nil.
-	previousStepReport := nil.
-	nextStepReport := nil
 ]
 
 { #category : 'accessing' }
@@ -190,6 +186,7 @@ ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
 	3 - Postcondition not nil -> evaluation
 	"
 
+	self step ifNil: [ ^ self ].
 	postconditionValidity ifTrue: [ ^ self ].
 	self preconditionIsValid ifFalse: [ ^ self ].
 	self step postcondition ifNil: [
