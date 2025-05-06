@@ -64,7 +64,8 @@ NeoExReqTracingPoint >> type [
 
 { #category : 'initialization' }
 NeoExReqTracingPoint >> uninstall [
-	self remove.
+
+	thisProcess runInMetaLevel: [ self remove ]
 ]
 
 { #category : 'as yet unclassified' }

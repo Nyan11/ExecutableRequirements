@@ -154,8 +154,8 @@ NeoExReqInstrumentationBuilder >> uninstallAllStepReports [
 	tracingPoints := self preconditionTracingPoints values
 	                 , self postconditionTracingPoints values.
 
-	tracingPoints do: [ :each | each uninstall ].
 	self methodProxies valuesDo: [ :each | each uninstall ].
+	tracingPoints do: [ :each | each uninstall ].
 	self preconditionTracingPoints removeAll.
 	self postconditionTracingPoints removeAll.
 	self methodProxies removeAll
