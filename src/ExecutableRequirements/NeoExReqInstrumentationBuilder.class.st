@@ -83,8 +83,8 @@ NeoExReqInstrumentationBuilder >> installStepReport: aStepReport [
 	| astNode |
 	astNode := aStepReport step node.
 	astNode isMethod
-		ifTrue: [ self installMethodProxyForStepReport: aStepReport withNode: astNode
-			 ]
+		ifTrue: [
+		"self installMethodProxyForStepReport: aStepReport withNode: astNode" ]
 		ifFalse: [
 			self
 				installTracingPointForStepReport: aStepReport
@@ -93,12 +93,13 @@ NeoExReqInstrumentationBuilder >> installStepReport: aStepReport [
 
 { #category : 'as yet unclassified' }
 NeoExReqInstrumentationBuilder >> installTracingPointForStepReport: aStepReport withNode: aNode [
-
 	"Quand la postcondition est nil, il ne trigger pas sauf si on retire la method proxy."
-	"L'installation de la méthode proxy retire le preconditionTracingPoint".
-	self
+
+	"L'installation de la méthode proxy retire le preconditionTracingPoint"
+
+	"self
 		installPostconditionMethodProxyForStepReport: aStepReport
-		withNode: aNode methodNode.
+		withNode: aNode methodNode."
 	self preconditionTracingPoints
 		at: aNode
 		ifPresent: [ :tp | tp addStepReport: aStepReport ]

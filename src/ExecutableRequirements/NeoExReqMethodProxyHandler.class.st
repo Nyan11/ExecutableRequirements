@@ -44,7 +44,7 @@ NeoExReqMethodProxyHandler >> afterExecutionWithReceiver: anObject arguments: an
 { #category : 'evaluating' }
 NeoExReqMethodProxyHandler >> beforeExecutionWithReceiver: anObject arguments: anArrayOfObjects [
 
-	self preconditionStepReports , self postconditionStepReports do: [
+	self preconditionStepReports do: [
 		:stepReport |
 		stepReport
 			verifyPreconditionWithReceiver: anObject
