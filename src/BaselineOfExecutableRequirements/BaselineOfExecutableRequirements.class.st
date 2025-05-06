@@ -29,8 +29,11 @@ BaselineOfExecutableRequirements >> baselineForCommon: spec [
 
 { #category : 'baselines' }
 BaselineOfExecutableRequirements >> coreDependencies: spec [
-
 	"No dependencies"
+	spec
+		baseline: 'MethodProxies'
+		with: [ spec repository: 'github://Nyan11/MethodProxies/src' ]
+	
 ]
 
 { #category : 'baselines' }

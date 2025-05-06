@@ -367,11 +367,11 @@ ExReqToploLoginWidget >> initialize [
 { #category : 'as yet unclassified' }
 ExReqToploLoginWidget >> loginAction [
 
-	(self authenticationBlock
-		 value: self usernameValue
-		 value: self passwordValue)
-		ifTrue: [ self loginBlock value ]
-		ifFalse: [
+	[ self authenticationBlock
+		  value: self usernameValue
+		  value: self passwordValue.
+			self loginBlock value ]
+		on: Exception do: [ :error |
 			self loginStatusContainer visibility: BlVisibility visible.
 			self passwordInput text: '' ]
 ]

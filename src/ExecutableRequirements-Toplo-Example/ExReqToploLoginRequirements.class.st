@@ -1006,9 +1006,14 @@ ExReqToploLoginRequirements >> capella_requirement_3 [
 				  (ExReqToploLoginSimulation >> #authenticateUsername:password:)
 					  ast
 				  withPrecondition: [ :obj :args |
-					  (obj
-						   perform: #authenticateUsername:password:
-						   withArguments: args) not ].
+					  [
+					  obj
+						  perform: #authenticateUsername:password:
+						  withArguments: args.
+					  false ]
+						  on: Exception
+						  do: [ true ] ]
+				  withPostcondition: [ true ].
 			  verif
 				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
 				  withPostcondition: [ :obj :args |

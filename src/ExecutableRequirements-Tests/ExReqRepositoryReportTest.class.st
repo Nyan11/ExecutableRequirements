@@ -43,16 +43,6 @@ ExReqRepositoryReportTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ExReqRepositoryReportTest >> testCreateTracingPoints [
-
-	self assert: ExReqTracingPoint all isEmpty.
-	self assert: self report tracingPoints isEmpty.
-	self report createTracingPoints.
-	self assert: ExReqTracingPoint all isNotEmpty.
-	self assert: self report tracingPoints isNotEmpty
-]
-
-{ #category : 'tests' }
 ExReqRepositoryReportTest >> testExecuteTracingPoints [
 
 	| requirement requirementReport |
@@ -67,15 +57,11 @@ ExReqRepositoryReportTest >> testExecuteTracingPoints [
 { #category : 'tests' }
 ExReqRepositoryReportTest >> testInstallTracingPoints [
 
-	self assert: ExReqTracingPoint all isEmpty.
-	self assert: self report tracingPoints isEmpty.
+	self assert: self report builder isEmpty.
 	self report installTracingPoints.
-	
-	self assert: ExReqTracingPoint all isNotEmpty.
-	self assert: self report tracingPoints isNotEmpty.
+	self assert: self report builder isNotEmpty.
 	self report removeTracingPoints.
-	self assert: ExReqTracingPoint all isEmpty.
-	self assert: self report tracingPoints isEmpty.
+	self assert: self report builder isEmpty.
 ]
 
 { #category : 'tests' }

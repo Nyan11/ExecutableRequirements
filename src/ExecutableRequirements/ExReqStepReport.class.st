@@ -178,6 +178,47 @@ ExReqStepReport >> subReports [
 ]
 
 { #category : 'as yet unclassified' }
+ExReqStepReport >> verifyPostconditionWithReceiver: anObject withArguments: aCollection [
+
+	self step ifNil: [ ^ self ].
+	postconditionValidity ifTrue: [ ^ self ].
+	self preconditionIsValid ifFalse: [ ^ self ].
+	self step postcondition ifNil: [
+		postconditionValidity := true.
+		self announceValidity.
+		^ self ].
+	postconditionValidity := self hasPostcondition
+		                         ifTrue: [
+			                         self step postcondition
+				                         valueWithEnoughArguments: {
+						                        anObject.
+						                         aCollection.
+						                         self requirement } ]
+		                         ifFalse: [ true ].
+
+	self isValid ifTrue: [ self announceValidity ]
+]
+
+{ #category : 'as yet unclassified' }
+ExReqStepReport >> verifyPreconditionWithReceiver: anObject withArguments: aCollection [ 
+	trigger := true.
+	preconditionValidity ifTrue: [ ^ self ].
+	self isPreviousStepValid ifFalse: [
+		preconditionValidity := false.
+		postconditionValidity := false.
+		^ self ].
+	preconditionValidity := self hasPrecondition
+		                        ifTrue: [
+			                        self step precondition
+				                        valueWithEnoughArguments: {
+						                        anObject.
+						                        aCollection.
+						                        self requirement } ]
+		                        ifFalse: [ true ].
+	self isValid ifTrue: [ self announceValidity ]
+]
+
+{ #category : 'as yet unclassified' }
 ExReqStepReport >> verifyStepPostconditionWithContext: aContext [
 	"
 	0 - Precondition ok -> ok
