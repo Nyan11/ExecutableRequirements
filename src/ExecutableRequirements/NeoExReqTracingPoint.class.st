@@ -1,12 +1,19 @@
 Class {
 	#name : 'NeoExReqTracingPoint',
 	#superclass : 'DebugPoint',
-	#traits : 'TExReqTracingHandler',
-	#classTraits : 'TExReqTracingHandler classTrait',
+	#instVars : [
+		'stepReports'
+	],
 	#category : 'ExecutableRequirements-Technical',
 	#package : 'ExecutableRequirements',
 	#tag : 'Technical'
 }
+
+{ #category : 'adding' }
+NeoExReqTracingPoint >> addStepReport: aStepReport [
+
+	self stepReports add: aStepReport
+]
 
 { #category : 'as yet unclassified' }
 NeoExReqTracingPoint >> disableInstrumentation [
@@ -38,6 +45,18 @@ NeoExReqTracingPoint >> name [
 ]
 
 { #category : 'accessing' }
+NeoExReqTracingPoint >> stepReports [
+
+	^ stepReports ifNil: [ stepReports := OrderedCollection new ]
+]
+
+{ #category : 'accessing' }
+NeoExReqTracingPoint >> stepReports: aCollection [
+
+	stepReports := aCollection
+]
+
+{ #category : 'accessing' }
 NeoExReqTracingPoint >> type [
 
 	^ #TracingPoint
@@ -52,7 +71,7 @@ NeoExReqTracingPoint >> uninstall [
 NeoExReqTracingPoint >> verifyConditionsWithContext: aContext [
 
 	<debuggerCompleteToSender>
-	DebugPointManager notifyDebugPointHit: self inContext: aContext.
+	"DebugPointManager notifyDebugPointHit: self inContext: aContext."
 	self enabled ifFalse: [ ^ false ].
 	self saveContext: aContext.
 	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])

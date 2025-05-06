@@ -16,6 +16,13 @@ ExReqMockTestObject >> methodToTestMetaSafeRecursion [
 ]
 
 { #category : 'as yet unclassified' }
+ExReqMockTestObject >> methodToTestTheExceptionExit [
+
+	x := [ true ifTrue: [ Exception signal ] ] value.
+	^ Color blue
+]
+
+{ #category : 'as yet unclassified' }
 ExReqMockTestObject >> methodToTestTheNonLocalReturn [
 
 	x := [ true ifTrue: [ ^ Color red ] ] value.

@@ -1,8 +1,6 @@
 Class {
 	#name : 'NeoExReqPostconditionTracingPoint',
 	#superclass : 'NeoExReqTracingPoint',
-	#traits : 'TExReqPostconditionsHandler',
-	#classTraits : 'TExReqPostconditionsHandler classTrait',
 	#category : 'ExecutableRequirements-Technical',
 	#package : 'ExecutableRequirements',
 	#tag : 'Technical'
@@ -20,4 +18,13 @@ NeoExReqPostconditionTracingPoint >> verifyConditionsWithReceiver: anObject with
 	^ self
 		  verifyPostconditionsWithReceiver: anObject
 		  withArguments: aCollection
+]
+
+{ #category : 'as yet unclassified' }
+NeoExReqPostconditionTracingPoint >> verifyPostconditionsWithReceiver: anObject withArguments: aCollection [
+
+	self stepReports do: [ :stepReport |
+		stepReport
+			verifyPostconditionWithReceiver: anObject
+			withArguments: aCollection ]
 ]

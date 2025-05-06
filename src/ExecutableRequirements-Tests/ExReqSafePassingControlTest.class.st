@@ -65,6 +65,23 @@ ExReqSafePassingControlTest >> req3 [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqSafePassingControlTest >> req4 [
+
+	<ExReqSafePassingControl>
+	^ ExReqRequirement new
+		  title: 'A requirement verifications shall handle exception';
+		  addVerification: [ :verify |
+			  verify
+				  addStepOnAST:
+					  ((ExReqMockTestObject methodNamed:
+							    #methodToTestTheExceptionExit) ast allChildren select: [
+							   :each | each isMessage ]) first
+				  withPrecondition: [ true ]
+				  withPostcondition: [ true ] ];
+		  yourself
+]
+
 { #category : 'running' }
 ExReqSafePassingControlTest >> setUp [
 
@@ -83,6 +100,18 @@ ExReqSafePassingControlTest >> tearDown [
 	self report removeTracingPoints.
 	self report closeReport.
 	repository := nil
+]
+
+{ #category : 'tests' }
+ExReqSafePassingControlTest >> testExceptionExit [
+
+	| requirement requirementReport |
+	self report installTracingPoints.
+	self should: [ExReqMockTestObject new methodToTestTheExceptionExit] raise: Exception.
+	requirement := self req4.
+	requirementReport := self report findRequirementReport: requirement.
+	self assert: requirementReport isValid.
+	self report removeTracingPoints
 ]
 
 { #category : 'tests' }

@@ -2,10 +2,9 @@ Class {
 	#name : 'NeoExReqInstrumentationBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'preconditionMethodProxies',
-		'postconditionMethodProxies',
 		'preconditionTracingPoints',
-		'postconditionTracingPoints'
+		'postconditionTracingPoints',
+		'methodProxies'
 	],
 	#category : 'ExecutableRequirements-Technical',
 	#package : 'ExecutableRequirements',
@@ -16,8 +15,7 @@ Class {
 NeoExReqInstrumentationBuilder >> initialize [
 
 	super initialize.
-	preconditionMethodProxies := Dictionary new.
-	postconditionMethodProxies := Dictionary new.
+	methodProxies := Dictionary new.
 	preconditionTracingPoints := Dictionary new.
 	postconditionTracingPoints := Dictionary new
 ]
@@ -25,17 +23,15 @@ NeoExReqInstrumentationBuilder >> initialize [
 { #category : 'as yet unclassified' }
 NeoExReqInstrumentationBuilder >> installAllStepReports: aCollection [
 
-	| tracingPoints methodProxies |
+	| tracingPoints |
 	aCollection do: [ :each | self installStepReport: each ].
 	tracingPoints := self preconditionTracingPoints values
 	                 , self postconditionTracingPoints values.
-	methodProxies := self preconditionMethodProxies values
-	                 , self postconditionMethodProxies values.
 
 	tracingPoints do: [ :each |
 		each link: each metaLink.
 		each install ].
-	methodProxies do: [ :each |
+	self methodProxies valuesDo: [ :each |
 		each
 			install;
 			enableInstrumentation ]
@@ -56,13 +52,13 @@ NeoExReqInstrumentationBuilder >> installMethodProxyForStepReport: aStepReport w
 { #category : 'as yet unclassified' }
 NeoExReqInstrumentationBuilder >> installPostconditionMethodProxyForStepReport: aStepReport withNode: aNode [
 
-	self postconditionMethodProxies
+	self methodProxies
 		at: aNode
-		ifPresent: [ :p | p handler addStepReport: aStepReport ]
+		ifPresent: [ :p | p handler addPostconditionStepReport: aStepReport ]
 		ifAbsentPut: [
 			| handler |
-			handler := NeoExReqPostconditionMethodProxyHandler new
-				           addStepReport: aStepReport;
+			handler := NeoExReqMethodProxyHandler new
+				           addPostconditionStepReport: aStepReport;
 				           yourself.
 			MpMethodProxy onMethod: aNode compiledMethod handler: handler ]
 ]
@@ -70,13 +66,13 @@ NeoExReqInstrumentationBuilder >> installPostconditionMethodProxyForStepReport: 
 { #category : 'as yet unclassified' }
 NeoExReqInstrumentationBuilder >> installPreconditionMethodProxyForStepReport: aStepReport withNode: aNode [
 
-	self preconditionMethodProxies
+	self methodProxies
 		at: aNode
-		ifPresent: [ :p | p handler addStepReport: aStepReport ]
+		ifPresent: [ :p | p handler addPreconditionStepReport: aStepReport ]
 		ifAbsentPut: [
 			| handler |
-			handler := NeoExReqPreconditionMethodProxyHandler new
-				           addStepReport: aStepReport;
+			handler := NeoExReqMethodProxyHandler new
+				           addPreconditionStepReport: aStepReport;
 				           yourself.
 			MpMethodProxy onMethod: aNode compiledMethod handler: handler ]
 ]
@@ -87,12 +83,12 @@ NeoExReqInstrumentationBuilder >> installStepReport: aStepReport [
 	| astNode |
 	astNode := aStepReport step node.
 	astNode isMethod
-		ifTrue: [
-		self installMethodProxyForStepReport: aStepReport withNode: astNode ]
+		ifTrue: [ self installMethodProxyForStepReport: aStepReport withNode: astNode
+			 ]
 		ifFalse: [
-			"self
+			self
 				installTracingPointForStepReport: aStepReport
-				withNode: astNode" ]
+				withNode: astNode ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -123,7 +119,9 @@ NeoExReqInstrumentationBuilder >> installTracingPointForStepReport: aStepReport 
 { #category : 'testing' }
 NeoExReqInstrumentationBuilder >> isEmpty [
 
- ^ self preconditionMethodProxies isEmpty and: [self postconditionMethodProxies isEmpty	and: [self preconditionTracingPoints isEmpty and: [ self postconditionTracingPoints isEmpty ]]].
+	^ self methodProxies isEmpty and: [
+		  self preconditionTracingPoints isEmpty and: [
+			  self postconditionTracingPoints isEmpty ] ]
 ]
 
 { #category : 'testing' }
@@ -132,21 +130,15 @@ NeoExReqInstrumentationBuilder >> isNotEmpty [
 ]
 
 { #category : 'accessing' }
-NeoExReqInstrumentationBuilder >> postconditionMethodProxies [
+NeoExReqInstrumentationBuilder >> methodProxies [
 
-	^ postconditionMethodProxies
+	^ methodProxies
 ]
 
 { #category : 'accessing' }
 NeoExReqInstrumentationBuilder >> postconditionTracingPoints [
 
 	^ postconditionTracingPoints
-]
-
-{ #category : 'accessing' }
-NeoExReqInstrumentationBuilder >> preconditionMethodProxies [
-
-	^ preconditionMethodProxies
 ]
 
 { #category : 'accessing' }
@@ -158,16 +150,13 @@ NeoExReqInstrumentationBuilder >> preconditionTracingPoints [
 { #category : 'as yet unclassified' }
 NeoExReqInstrumentationBuilder >> uninstallAllStepReports [
 
-	| tracingPoints methodProxies |
+	| tracingPoints |
 	tracingPoints := self preconditionTracingPoints values
 	                 , self postconditionTracingPoints values.
-	methodProxies := self preconditionMethodProxies values
-	                 , self postconditionMethodProxies values.
 
 	tracingPoints do: [ :each | each uninstall ].
-	methodProxies do: [ :each | each uninstall ].
+	self methodProxies valuesDo: [ :each | each uninstall ].
 	self preconditionTracingPoints removeAll.
 	self postconditionTracingPoints removeAll.
-	self preconditionMethodProxies removeAll.
-	self postconditionMethodProxies removeAll.
+	self methodProxies removeAll
 ]
