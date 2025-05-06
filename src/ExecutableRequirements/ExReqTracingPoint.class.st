@@ -127,7 +127,7 @@ ExReqTracingPoint >> metaLink [
 { #category : 'accessing' }
 ExReqTracingPoint >> name [
 
-	^ name ifNil: [ #TracingPoint ]
+	^ name ifNil: [ name := #TracingPoint ]
 ]
 
 { #category : 'default values' }

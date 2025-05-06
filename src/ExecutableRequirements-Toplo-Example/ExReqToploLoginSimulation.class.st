@@ -57,7 +57,7 @@ ExReqToploLoginSimulation >> authenticateUsername: aUsernameString password: aPa
 	self database
 		at: aUsernameString
 		ifPresent: [ :value | ^ aPasswordString = value ]
-		ifAbsent: [ ^ false ]
+		ifAbsent: [ Exception signal: 'Wrong credentials' ]
 ]
 
 { #category : 'as yet unclassified' }
