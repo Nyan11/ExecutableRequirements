@@ -1013,6 +1013,18 @@ ExReqToploLoginRequirements >> capella_requirement_3 [
 				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
 				  withPostcondition: [ :obj :args |
 				  obj loginStatusContainer isVisible ] ];
+			addVerification: [ :verif |
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
+				  withPrecondition: [ :obj |
+				  obj loginStatusContainer isVisible not ].
+			  verif
+				  addStepOnAST:
+				  ((ExReqToploLoginWidget >> #loginAction) ast allChildren select: #isSequence) last.
+			  verif
+				  addStepOnAST: (ExReqToploLoginWidget >> #loginAction) ast
+				  withPostcondition: [ :obj :args |
+				  obj loginStatusContainer isVisible ] ];
 		  yourself
 ]
 
