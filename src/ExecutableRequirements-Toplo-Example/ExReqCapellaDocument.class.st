@@ -5,8 +5,9 @@ Class {
 		'name',
 		'id'
 	],
-	#category : 'ExecutableRequirements-Toplo-Example',
-	#package : 'ExecutableRequirements-Toplo-Example'
+	#category : 'ExecutableRequirements-Toplo-Example-Requirements',
+	#package : 'ExecutableRequirements-Toplo-Example',
+	#tag : 'Requirements'
 }
 
 { #category : 'accessing' }

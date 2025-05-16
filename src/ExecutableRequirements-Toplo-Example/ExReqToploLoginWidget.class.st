@@ -5,8 +5,9 @@ Class {
 		'loginBlock',
 		'authenticationBlock'
 	],
-	#category : 'ExecutableRequirements-Toplo-Example',
-	#package : 'ExecutableRequirements-Toplo-Example'
+	#category : 'ExecutableRequirements-Toplo-Example-UI',
+	#package : 'ExecutableRequirements-Toplo-Example',
+	#tag : 'UI'
 }
 
 { #category : 'pyramid-serialized-bloc' }
@@ -14,13 +15,13 @@ ExReqToploLoginWidget class >> loginPanel [
 	"This class has been generated using Pyramid.
 
 	By: YannLEGOFF
-	2025-04-18 13:31:54"
+	2025-05-15 17:23:28"
 
 	<pyStash>
-	^ [ | blinsets1 blinsets2 tobutton3 |
+	^ [ | blinsets1 tobutton2 blinsets3 |
 blinsets1 := BlInsets top: 0.0 right: 0.0 bottom: 0.0 left: 3.0.
-blinsets2 := BlInsets top: 15.0 right: 0.0 bottom: 0.0 left: 0.0.
-tobutton3 := ToButton new.
+tobutton2 := ToButton new.
+blinsets3 := BlInsets top: 15.0 right: 0.0 bottom: 0.0 left: 0.0.
 {(ToPane new
    background: (BlPaintBackground new
          paint: (BlColorPaint new
@@ -29,6 +30,7 @@ tobutton3 := ToButton new.
          opacity: 1.0;
          yourself);
    geometry: (BlRoundedRectangleGeometry cornerRadius: 6);
+   effect: (BlGaussianShadowEffect color: (Color r: 0.0 g: 0.0 b: 0.0 alpha: 1.0) width: 10 offset: 0 @ 0);
    addChildren: {(ToLabel new
          text: (BlRopedText new
                rope: (BlAttributeRope attributes: {(BlFontWeightAttribute new
@@ -52,7 +54,7 @@ tobutton3 := ToButton new.
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
             constraints vertical fitContent.
-            constraints margin: blinsets2 ];
+            constraints margin: blinsets3 ];
          id: #welcomeLabel;
          yourself) . 
       (BlElement new
@@ -230,7 +232,7 @@ tobutton3 := ToButton new.
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
             constraints vertical fitContent.
-            constraints margin: blinsets2 ];
+            constraints margin: blinsets3 ];
          id: #usernameLabel;
          yourself) . 
       (ToTextField new
@@ -268,7 +270,7 @@ tobutton3 := ToButton new.
                yourself);
          constraintsDo: [:constraints |  constraints horizontal fitContent.
             constraints vertical fitContent.
-            constraints margin: blinsets2 ];
+            constraints margin: blinsets3 ];
          id: #passwordLabel;
          yourself) . 
       (ToTextField new
@@ -283,7 +285,7 @@ tobutton3 := ToButton new.
             constraints padding: (BlInsets top: 4.0 right: 8.0 bottom: 4.0 left: 8.0) ];
          id: #passwordInput;
          yourself) . 
-      (tobutton3
+      (tobutton2
          endFlexible: true;
          flexible: true;
          middleElement: (ToLabel new
@@ -304,7 +306,7 @@ tobutton3 := ToButton new.
                                  collection: 'Login';
                                  yourself));
                      yourself);
-               addStamp: #'parent-button' withValue: tobutton3;
+               addStamp: #'parent-button' withValue: tobutton2;
                constraintsDo: [:constraints |  constraints horizontal fitContent.
                   constraints vertical fitContent ];
                yourself);
@@ -325,7 +327,7 @@ tobutton3 := ToButton new.
          constraintsDo: [:constraints |  constraints horizontal matchParent.
             constraints vertical fitContent.
             constraints padding: (BlInsets top: 4.0 right: 8.0 bottom: 4.0 left: 8.0).
-            constraints margin: blinsets2 ];
+            constraints margin: blinsets3 ];
          id: #loginButton;
          yourself)};
    constraintsDo: [:constraints |  constraints horizontal exact: 260.0.
@@ -362,6 +364,20 @@ ExReqToploLoginWidget >> initialize [
 	loginBlock := [  ].
 	self loginButton whenClickedDo: [ self loginAction ].
 	self loginStatusContainer visibility: BlVisibility gone
+]
+
+{ #category : 'testing' }
+ExReqToploLoginWidget >> isLoginStatusContainerVisible [
+
+	^ self loginStatusContainer isVisible
+]
+
+{ #category : 'testing' }
+ExReqToploLoginWidget >> isLoginStatusContainerVisible: aBoolean [
+
+	self loginStatusContainer visibility: (aBoolean
+			 ifTrue: [ BlVisibility visible ]
+			 ifFalse: [ BlVisibility gone ])
 ]
 
 { #category : 'as yet unclassified' }
