@@ -6,7 +6,7 @@ Class {
 	#tag : 'Requirements'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capella file' }
 ExReqToploLoginRequirements >> capellaFile [ 
 
 	^ '<?xml version="1.0" encoding="UTF-8"?>
@@ -1002,7 +1002,7 @@ ExReqToploLoginRequirements >> capella_requirement_3 [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 4' }
 ExReqToploLoginRequirements >> compiledSourceCodeIntoRequirementMethods [
 
 	| pragma methodPrefix sourceCodes index methodString |
@@ -1024,7 +1024,7 @@ ExReqToploLoginRequirements >> compiledSourceCodeIntoRequirementMethods [
 		self class compile: fullMethod classified: 'requirement - generated' ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'script' }
 ExReqToploLoginRequirements >> openOnExample [
 
 	<script: 'ExReqToploLoginRequirements new openOnExample'>
@@ -1037,7 +1037,7 @@ ExReqToploLoginRequirements >> openOnExample [
 		  open.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 1' }
 ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 
 	| project simple |
@@ -1054,13 +1054,13 @@ ExReqToploLoginRequirements >> transformCapellaFileIntoSimpleModel [
 	^ simple
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 3' }
 ExReqToploLoginRequirements >> transformRequirementsIntoSourceCode [
 
 	^ self transformSimpleModelIntoRequirements collect: [ :each | Stash new serialize: each ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'step 2' }
 ExReqToploLoginRequirements >> transformSimpleModelIntoRequirements [
 
 	^ self transformCapellaFileIntoSimpleModel asExReqRequirements

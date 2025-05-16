@@ -57,6 +57,7 @@ ExReqRepositoryReportTest >> testExecuteTracingPoints [
 
 	| requirement requirementReport |
 	self report installTracingPoints.
+	ExReqMockRequirements new testReq1.
 	requirement := ExReqMockRequirements new testReq7.
 	requirementReport := self report findRequirementReport: requirement.
 	self assert: requirementReport isValid.
@@ -99,4 +100,45 @@ ExReqRepositoryReportTest >> testRepositoryEquivalentReport [
 				| repSte |
 				repSte := repVer stepReports at: indexSte.
 				self assert: ste equals: repSte step ] ] ]
+]
+
+{ #category : 'tests' }
+ExReqRepositoryReportTest >> testStepReportIsValidEvent [
+
+	| success |
+	success := false.
+	self report announcer
+		when: ExReqStepReportIsValidEvent
+		do: [ :evt | success := true ]
+		for: self.
+	self report installTracingPoints.
+	ExReqMockRequirements new testReq1.
+	self assert: success
+]
+
+{ #category : 'tests' }
+ExReqRepositoryReportTest >> testTracingPointInstalledEvent [
+
+	| success |
+	success := false.
+	self report announcer
+		when: ExReqTracingPointInstalledEvent
+		do: [ :evt | success := true ]
+		for: self.
+	self report installTracingPoints.
+	self assert: success
+]
+
+{ #category : 'tests' }
+ExReqRepositoryReportTest >> testTracingPointRemovedEvent [
+
+	| success |
+	success := false.
+	self report announcer
+		when: ExReqTracingPointRemovedEvent
+		do: [ :evt | success := true ]
+		for: self.
+	self report installTracingPoints.
+	self report removeTracingPoints.
+	self assert: success
 ]

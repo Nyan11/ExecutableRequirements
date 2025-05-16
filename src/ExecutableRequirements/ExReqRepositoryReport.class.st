@@ -84,25 +84,35 @@ ExReqRepositoryReport >> closeReport [
 { #category : 'as yet unclassified' }
 ExReqRepositoryReport >> createTracingPoints [
 
-	| stepReports nodeDictionary |
+	| stepReports preconditionNodeDictionary postconditionNodeDictionary|
 	"
 	- Step1: Get all step reports.
-	- Step2: Form a dictionary with all ast ->  step reports .
-	- Step3: Create all TracingPoint.
+	- Step2: Create a dictionary with all ast ->  step reports.
+	- Step3: Create all PreconditionTracingPoint.
+	- Step4: Create a dictionary with all ast & ast methodNode ->  step reports.
+	- Step5: Create all PostconditionTracingPoint.
 	"
 	stepReports := self requirementReports flatCollect: [ :req |
 		               req verificationReports flatCollect: #stepReports ].
-	nodeDictionary := Dictionary new.
+	preconditionNodeDictionary := Dictionary new.
+	postconditionNodeDictionary := Dictionary new.
 	stepReports do: [ :stepReport |
-		nodeDictionary
+		preconditionNodeDictionary
 			at: stepReport step node
 			ifPresent: [ :col | col add: stepReport ]
-			ifAbsentPut: [ OrderedCollection with: stepReport ] ].
-	self tracingPoints: (nodeDictionary values collect: [ :col |
-			 ExReqTracingPointContainer new
-				 stepReports: col;
-				 createTracingPoint;
-				 yourself ])
+			ifAbsentPut: [ OrderedCollection with: stepReport ].
+		postconditionNodeDictionary
+			at: stepReport step node
+			ifPresent: [ :col | col add: stepReport ]
+			ifAbsentPut: [ Set with: stepReport ].
+		postconditionNodeDictionary
+			at: stepReport step node methodNode
+			ifPresent: [ :col | col add: stepReport ]
+			ifAbsentPut: [ Set with: stepReport ].
+		 ].
+	self tracingPoints: OrderedCollection new.
+	self tracingPoints addAll: (preconditionNodeDictionary associations collect: [ :asso | ExReqTracingPoint installPreconditionOn: asso key withStepReports: asso value ]).
+	self tracingPoints addAll: (postconditionNodeDictionary associations collect: [ :asso | ExReqTracingPoint installPostconditionOn: asso key withStepReports: asso value ]).
 ]
 
 { #category : 'as yet unclassified' }
@@ -126,9 +136,7 @@ ExReqRepositoryReport >> initialize [
 ExReqRepositoryReport >> installTracingPoints [
 
 	self createTracingPoints.
-	self tracingPoints do: [ :each |
-		each preconditionTracingPoint install.
-		each postconditionTracingPoint install ].
+	self tracingPoints do: [ :each | each install ].
 	self isInstalled: true.
 	self isRunning: true.
 	self annouceTracingPointInstalled
@@ -149,12 +157,10 @@ ExReqRepositoryReport >> isValid [
 { #category : 'as yet unclassified' }
 ExReqRepositoryReport >> removeTracingPoints [
 
-	self tracingPoints do: [ :each |
-		each preconditionTracingPoint remove.
-		each postconditionTracingPoint remove ].
-	self tracingPoints: {}.
+	self tracingPoints do: [ :each | each remove ].
+	self tracingPoints: {  }.
 	self isRunning: false.
-	self annouceTracingPointRemoved.
+	self annouceTracingPointRemoved
 ]
 
 { #category : 'accessing' }

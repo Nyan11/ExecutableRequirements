@@ -6,6 +6,18 @@ Class {
 	#tag : 'Meta-Requirements-Tests'
 }
 
+{ #category : 'initialization' }
+ExReqMockRequirements >> resetMethod [
+
+	<script: 'ExReqMockRequirements new resetMethod'>
+	| class methods |
+	ExReqTracingPoint all do: #remove.
+	class := ExReqMockRequirements.
+	methods := class methods collect: [ :each | each sourceCode ].
+	class methods do: [ :each | class removeSelector: each ].
+	methods do: [ :each | class compile: each ]
+]
+
 { #category : 'tests' }
 ExReqMockRequirements >> testReq1 [
 
@@ -113,26 +125,26 @@ ExReqMockRequirements >> testReq7 [
 		  description: 'The description';
 		  addVerification: [ :verify |
 			  verify addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
-						   select: [ :each | each isSequence ]) second ];
+					  ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
+						   select: [ :each | each isSequence ]) first ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
-						   select: [ :each | each isSequence ]) second
+					  ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
+						   select: [ :each | each isSequence ]) first
 				  withPrecondition: [ :obj :arguments :requirement | true ] ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
-						   select: [ :each | each isSequence ]) second
+					  ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
+						   select: [ :each | each isSequence ]) first
 				  withPrecondition: [ :obj :arguments :requirement | true ]
 				  withPostcondition: [ :obj :arguments :requirement | true ] ];
 		  addVerification: [ :verify |
 			  verify
 				  addStepOnAST:
-					  ((ExReqMockRequirements methodNamed: #testReq7) ast allChildren
-						   select: [ :each | each isSequence ]) second
+					  ((ExReqMockRequirements methodNamed: #testReq1) ast allChildren
+						   select: [ :each | each isSequence ]) first
 				  withPostcondition: [ :obj :arguments :requirement | true ] ];
 		  yourself
 ]

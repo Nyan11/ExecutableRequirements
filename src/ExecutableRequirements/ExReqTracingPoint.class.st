@@ -19,11 +19,60 @@ ExReqTracingPoint class >> all [
 	^ TracingPoints ifNil: [ TracingPoints := Set new ]
 ]
 
+{ #category : 'as yet unclassified' }
+ExReqTracingPoint class >> installPostconditionOn: aNode withStepReports: aCollection [
+
+	| tracingPoint |
+	tracingPoint := self
+		                tracingPointOn: aNode
+		                withStepReports: aCollection.
+	tracingPoint bePostcondition.
+	self installTracingPoint: tracingPoint withBehaviors: {  }.
+		^ tracingPoint
+]
+
+{ #category : 'as yet unclassified' }
+ExReqTracingPoint class >> installPreconditionOn: aNode withStepReports: aCollection [
+
+	| tracingPoint |
+	tracingPoint := self
+		                tracingPointOn: aNode
+		                withStepReports: aCollection.
+	tracingPoint bePrecondition.
+	self installTracingPoint: tracingPoint withBehaviors: {  }.
+	^ tracingPoint
+]
+
+{ #category : 'as yet unclassified' }
+ExReqTracingPoint class >> installTracingPoint: dp withBehaviors: aListOfBehaviorClasses [
+
+	| ml |
+	ml := dp metaLink.
+
+	dp link: ml.
+	dp install.
+	self add: dp.
+
+	"adding behaviors"
+	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new ].
+
+	^ dp
+]
+
 { #category : 'removing' }
 ExReqTracingPoint class >> remove: aDebugPoint [
 
 	self all remove: aDebugPoint ifAbsent: [  ].
 	DebugPoint all remove: aDebugPoint ifAbsent: [  ].
+]
+
+{ #category : 'as yet unclassified' }
+ExReqTracingPoint class >> tracingPointOn: aNode withStepReports: aCollection [
+
+	^ self new
+		  node: aNode;
+		  stepReports: aCollection;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -52,16 +101,6 @@ ExReqTracingPoint >> hitWithContext: aContext [
 	self verifyStepsConditionWithContext: aContext.
 	self enabled: true.
 	^ true
-]
-
-{ #category : 'API' }
-ExReqTracingPoint >> hitWithContext: aContext value: aValue [
-
-	(self hitWithContext: aContext) ifFalse: [ ^ self ].
-	self enabled ifFalse: [ ^ self ].
-	self enabled: false.
-	self verifyStepsConditionWithContext: aContext.
-	self enabled: true
 ]
 
 { #category : 'accessing' }
